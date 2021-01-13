@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PruebaService {
 
-	private static final Log LOG = LogFactory.getLog(PruebaService.class);
+    private static final Log LOG = LogFactory.getLog(PruebaService.class);
 
-	
+
 }

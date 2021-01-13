@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class PruebaController {
 
-	private static final Log LOG = LogFactory.getLog(PruebaController.class);
+    private static final Log LOG = LogFactory.getLog(PruebaController.class);
 
-	@Autowired
-	protected PruebaService pruebaService;
+    @Autowired
+    protected PruebaService pruebaService;
 
-	@GetMapping("/ejemplo")
-	public ResponseEntity<Ejemplo> getMessageStatus(@RequestParam(value ="nombre") String nombre) {
-		try {
-			Ejemplo ejemplo = new Ejemplo();
-			ejemplo.setNombre(nombre);
-			return ResponseEntity.ok(ejemplo);
-		}catch (Exception e){
-			LOG.error("Error", e);
-		}
-		return null;
-	}
+    @GetMapping("/ejemplo")
+    public ResponseEntity<Ejemplo> getMessageStatus(@RequestParam(value = "nombre") String nombre) {
+        try {
+            Ejemplo ejemplo = new Ejemplo();
+            ejemplo.setNombre(nombre);
+            return ResponseEntity.ok(ejemplo);
+        } catch (Exception e) {
+            LOG.error("Error", e);
+        }
+        return null;
+    }
 
 }
 
