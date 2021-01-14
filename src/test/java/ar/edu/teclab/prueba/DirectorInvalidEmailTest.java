@@ -1,6 +1,7 @@
 package ar.edu.teclab.prueba;
 
 import ar.edu.teclab.prueba.model.Director;
+import ar.edu.teclab.prueba.shared.DomainException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

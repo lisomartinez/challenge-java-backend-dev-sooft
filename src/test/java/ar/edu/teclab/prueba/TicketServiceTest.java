@@ -1,6 +1,7 @@
 package ar.edu.teclab.prueba;
 import static org.assertj.core.api.Assertions.*;
 
+import ar.edu.teclab.prueba.shared.DomainException;
 import org.junit.Test;
 
 import java.util.List;

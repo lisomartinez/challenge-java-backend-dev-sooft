@@ -3,7 +3,10 @@ package ar.edu.teclab.prueba;
 import ar.edu.teclab.prueba.model.Degree;
 import ar.edu.teclab.prueba.model.DegreeType;
 import ar.edu.teclab.prueba.model.Director;
+import ar.edu.teclab.prueba.shared.DomainException;
 import org.junit.Test;
+
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -16,7 +19,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        Degree degree = Degree.createDegree(id, title, type, director);
+        Degree degree = Degree.createDegree(id, title, type, director, new HashSet<>());
         assertThat(degree.getTitle()).isEqualTo(title);
     }
 
@@ -27,7 +30,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        Degree degree = Degree.createDegree(id, title, type, director);
+        Degree degree =Degree.createDegree(id, title, type, director, new HashSet<>());
         assertThat(degree.getType()).isEqualTo(DegreeType.ONLINE);
     }
 
@@ -38,7 +41,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        Degree degree = Degree.createDegree(id, title, type, director);
+        Degree degree = Degree.createDegree(id, title, type, director, new HashSet<>());
         assertThat(degree.getDirector()).isEqualTo(director);
     }
 
@@ -48,7 +51,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> Degree.createDegree(id, "   ", type, director))
+        assertThatThrownBy(() -> Degree.createDegree(id, "   ", type, director, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without title.");
     }
@@ -59,7 +62,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> Degree.createDegree(id, null, type, director))
+        assertThatThrownBy(() -> Degree.createDegree(id, null, type, director, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without title.");
     }
@@ -69,7 +72,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> Degree.createDegree("  ", "   ", type, director))
+        assertThatThrownBy(() -> Degree.createDegree("  ", "   ", type, director, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without an id.");
     }
@@ -80,7 +83,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> Degree.createDegree(null, title, type, director))
+        assertThatThrownBy(() -> Degree.createDegree(null, title, type, director, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without an id.");
     }
@@ -91,7 +94,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> Degree.createDegree("other format", title, type, director))
+        assertThatThrownBy(() -> Degree.createDegree("other format", title, type, director, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Degree Id should have UUID format");
     }
@@ -104,7 +107,7 @@ public class DegreeTest {
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> Degree.createDegree(id, title, type, null))
+        assertThatThrownBy(() -> Degree.createDegree(id, title, type, null, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without a Director.");
     }

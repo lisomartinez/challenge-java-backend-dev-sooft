@@ -1,52 +1,59 @@
 package ar.edu.teclab.prueba.model;
 
-import ar.edu.teclab.prueba.DomainException;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import ar.edu.teclab.prueba.shared.DomainException;
 
-import java.util.Locale;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 public class Degree {
-    @JsonIgnore
     private Long id;
     private String degreeId;
     private String title;
     private DegreeType type;
     private Director director;
+    private Set<Subject> studyPlan;
 
+    @SuppressWarnings("unused")
 
-    Degree() {
+//    public Degree(String degreeId, String title, DegreeType type, Director director) {
+//        this(null, degreeId, title, type, director);
+//    }
+//
+//    public Degree(Long id, String degreeId, String title, DegreeType type, Director director) {
+//        this(id, degreeId, title, type, director, new HashSet<>());
+//
+//    }
 
-    }
-
-    public Degree(String degreeId, String title, DegreeType type, Director director) {
-        this.degreeId = degreeId;
-        this.title = title;
-        this.type = type;
-        this.director = director;
-    }
-
-    private Degree(Long id, String degreeId, String title, DegreeType type, Director director) {
+    public Degree(Long id, String degreeId, String title, DegreeType type, Director director, Set<Subject> studyPlan) {
         this.id = id;
         this.degreeId = degreeId;
         this.title = title;
         this.type = type;
         this.director = director;
-    }
-
-    public static Degree createDegree(String title, DegreeType type, Director director) {
-        return new Degree(null, null, title, type, director);
+        this.studyPlan = studyPlan;
     }
 
 
-    public static Degree createDegree(String directorId, String title, DegreeType type, Director director) {
-        assertThatIdHasUUIDFormat(directorId);
+    public static Degree createDegree(String title, DegreeType type, Director director, Set<Subject> studyPlan) {
         assertThatTitleIsPresent(title);
         assertThatHasADirector(director);
-        return new Degree(null, directorId, title, type, director);
+        return new Degree(null, null, title, type, director, studyPlan);
     }
+
+//    public static Degree createDegree(String title, DegreeType type, Director director, Set<Subject> studyPlan) {
+//        assertThatTitleIsPresent(title);
+//        assertThatHasADirector(director);
+//        return new Degree(null, null, title, type, director, studyPlan);
+//    }
+
+//    public static Degree createDegree(String directorId, String title, DegreeType type, Director director) {
+//        assertThatIdHasUUIDFormat(directorId);
+//        assertThatTitleIsPresent(title);
+//        assertThatHasADirector(director);
+//        return new Degree(null, directorId, title, type, director);
+//    }
 
     private static void assertThatHasADirector(Director director) {
         if (director == null) throw new DomainException("Cannot create a Degree without a Director.");
@@ -64,6 +71,18 @@ public class Degree {
 
     private static void assertThatTitleIsPresent(String title) {
         if (title == null || title.trim().isEmpty()) throw new DomainException("Cannot create a Degree without title.");
+    }
+
+    public static Degree createDegree(String degreeId,
+                                      String title,
+                                      DegreeType type,
+                                      Director director,
+                                      Set<Subject> studyPlan
+    ) {
+        assertThatIdHasUUIDFormat(degreeId);
+        assertThatTitleIsPresent(title);
+        assertThatHasADirector(director);
+        return new Degree(null, degreeId, title, type, director, studyPlan);
     }
 
 
@@ -107,9 +126,16 @@ public class Degree {
         type = newType;
     }
 
-    @JsonGetter("type")
-    public String getLowerCaseType() {
-        return type.toString().toLowerCase(Locale.ROOT);
+    public void addSubjectToStudyPlan(Subject subject) {
+        this.studyPlan.add(subject);
+    }
+
+    public void removeSubjectFromStudyPlan(Subject subject) {
+        this.studyPlan.remove(subject);
+    }
+
+    public Set<Subject> getStudyPlan() {
+        return Collections.unmodifiableSet(studyPlan);
     }
 
     @Override

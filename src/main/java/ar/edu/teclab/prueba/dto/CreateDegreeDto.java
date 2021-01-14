@@ -1,16 +1,27 @@
 package ar.edu.teclab.prueba.dto;
 
+import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 
 public class CreateDegreeDto {
+
+    @Size(min = 2, max = 255)
     private String title;
+
+    @Size(min = 2, max = 25)
     private String type;
+
+    @UUID
     private String directorId;
 
-    public CreateDegreeDto(String title, String type, String directorId) {
+    private List<SubjectDto> studyPlan;
+
+    public CreateDegreeDto(String title, String type, String directorId, List<SubjectDto> studyPlan) {
         this.title = title;
         this.type = type;
         this.directorId = directorId;
+        this.studyPlan = studyPlan;
     }
 
     public CreateDegreeDto() {
@@ -40,17 +51,28 @@ public class CreateDegreeDto {
         this.directorId = directorId;
     }
 
+    public List<SubjectDto> getStudyPlan() {
+        return studyPlan;
+    }
+
+    public void setStudyPlan(List<SubjectDto> studyPlan) {
+        this.studyPlan = studyPlan;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CreateDegreeDto)) return false;
         CreateDegreeDto that = (CreateDegreeDto) o;
-        return getTitle().equals(that.getTitle()) && getType().equals(that.getType()) && getDirectorId().equals(that.getDirectorId());
+        return Objects.equals(getTitle(), that.getTitle()) && Objects.equals(getType(),
+                                                                             that.getType()) && Objects
+                .equals(getDirectorId(), that.getDirectorId()) && Objects.equals(getStudyPlan(),
+                                                                                 that.getStudyPlan());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getType(), getDirectorId());
+        return Objects.hash(getTitle(), getType(), getDirectorId(), getStudyPlan());
     }
 
     @Override
@@ -59,6 +81,7 @@ public class CreateDegreeDto {
                 "title='" + title + '\'' +
                 ", type='" + type + '\'' +
                 ", directorId='" + directorId + '\'' +
+                ", studyPlan=" + studyPlan +
                 '}';
     }
 }

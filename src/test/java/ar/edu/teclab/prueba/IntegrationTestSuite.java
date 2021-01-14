@@ -7,7 +7,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     DegreeControllerTest.class,
         DegreeSystemTest.class,
-        TicketControllerTest.class
+        TicketControllerTest.class,
+        DegreeControllerTest.class,
+        TicketServiceTest.class
 })
 public class IntegrationTestSuite {
 

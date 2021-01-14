@@ -1,7 +1,7 @@
 package ar.edu.teclab.prueba.service;
 
 import ar.edu.teclab.prueba.Comment;
-import ar.edu.teclab.prueba.DomainException;
+import ar.edu.teclab.prueba.shared.DomainException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,9 +26,6 @@ import java.util.Map;
 public class RestTicketService implements TicketService {
     public static final String TICKET_BASE_URL = "https://teclab1593636133.zendesk.com/api/v2/tickets";
 
-    private String username;
-
-    private String password;
     private RestTemplate httpClient;
     private ObjectMapper objectMapper;
 
@@ -38,18 +35,15 @@ public class RestTicketService implements TicketService {
                              @Value("${zendesk.password}") String password,
                              ObjectMapper objectMapper
     ) {
-        this.username = user;
-        this.password = password;
         this.objectMapper = objectMapper;
-
-        setupRestTemplate(restTemplateBuilder);
+        setupRestTemplate(restTemplateBuilder, user, password);
     }
 
-    private void setupRestTemplate(RestTemplateBuilder restTemplateBuilder) {
+    private void setupRestTemplate(RestTemplateBuilder restTemplateBuilder, String user, String password) {
         DefaultUriTemplateHandler baseUrl = new DefaultUriTemplateHandler();
         baseUrl.setBaseUrl(TICKET_BASE_URL);
         this.httpClient = restTemplateBuilder
-                .basicAuthorization(username, password)
+                .basicAuthorization(user, password)
                 .uriTemplateHandler(baseUrl)
                 .errorHandler(new RestTemplateResponseErrorHandler())
                 .build();

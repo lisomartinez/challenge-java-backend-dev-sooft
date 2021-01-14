@@ -5,6 +5,7 @@ import ar.edu.teclab.prueba.model.*;
 import ar.edu.teclab.prueba.repository.DegreeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,7 +29,7 @@ public class DegreeService {
         try {
             degreeRepository.removeByDirectorId(degreeId);
         } catch (IllegalArgumentException ex) {
-            throw new DegreeDomainException("Cannot delete non existing Degree");
+            throw new DegreeNotFoundException("Cannot delete non existing Degree");
         }
 
     }
@@ -37,14 +38,15 @@ public class DegreeService {
         try {
             return degreeRepository.update(degreeForUpdate);
         } catch (IllegalArgumentException ex) {
-            throw new DegreeDomainException("Cannot update a non existing Degree");
+            throw new DegreeNotFoundException("Cannot update a non existing Degree");
         }
     }
 
     public Degree create(CreateDegreeDto degreeDto) {
         Degree degree = Degree.createDegree(degreeDto.getTitle(),
                                             DegreeType.valueOf(degreeDto.getType().toUpperCase(Locale.ROOT)),
-                                            Director.identifiedAs(degreeDto.getDirectorId()));
+                                            Director.identifiedAs(degreeDto.getDirectorId()),
+                                            new HashSet<>());
         return degreeRepository.save(degree);
     }
 }

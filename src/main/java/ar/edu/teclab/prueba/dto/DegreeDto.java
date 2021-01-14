@@ -2,24 +2,42 @@ package ar.edu.teclab.prueba.dto;
 
 import ar.edu.teclab.prueba.model.Degree;
 import ar.edu.teclab.prueba.model.DegreeType;
+import ar.edu.teclab.prueba.model.Subject;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DegreeDto {
+
+    @UUID
     private String degreeId;
+
+    @Size(min = 2, max = 255)
     private String title;
+
+    @Size(min = 2, max = 25)
     private String type;
+
+    @NotNull
     private DirectorDto director;
+
+    @NotNull
+    private List<SubjectDto> studyPlan;
 
     public DegreeDto() {
     }
 
-    public DegreeDto(String degreeId, String title, DegreeType type, DirectorDto director) {
+    public DegreeDto(String degreeId, String title, DegreeType type, DirectorDto director, List<SubjectDto> studyPlan) {
         this.degreeId = degreeId;
         this.title = title;
         this.type = type.toString().toLowerCase(Locale.ROOT);
         this.director = director;
+        this.studyPlan = studyPlan;
     }
 
 
@@ -27,7 +45,12 @@ public class DegreeDto {
         return new DegreeDto(degree.getDegreeId(),
                              degree.getTitle(),
                              degree.getType(),
-                             DirectorDto.from(degree.getDirector()));
+                             DirectorDto.from(degree.getDirector()),
+                             mapStudyPlanToDto(degree));
+    }
+
+    private static List<SubjectDto> mapStudyPlanToDto(Degree degree) {
+        return degree.getStudyPlan().stream().map(SubjectDto::from).collect(Collectors.toList());
     }
 
     public String getDegreeId() {
@@ -62,6 +85,14 @@ public class DegreeDto {
         this.director = director;
     }
 
+    public List<SubjectDto> getStudyPlan() {
+        return studyPlan;
+    }
+
+    public void setStudyPlan(List<SubjectDto> studyPlan) {
+        this.studyPlan = studyPlan;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,6 +119,10 @@ public class DegreeDto {
     }
 
     public Degree toEntity() {
-        return new Degree(degreeId, title, DegreeType.valueOf(type.toUpperCase(Locale.ROOT)), director.toEntity());
+        return Degree.createDegree(degreeId, title, DegreeType.valueOf(type.toUpperCase(Locale.ROOT)), director.toEntity(), mapStudyPlanToEntity(studyPlan));
+    }
+
+    private Set<Subject> mapStudyPlanToEntity(List<SubjectDto> studyPlan) {
+        return studyPlan.stream().map(SubjectDto::toEntity).collect(Collectors.toSet());
     }
 }

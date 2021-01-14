@@ -6,4 +6,8 @@ public class DegreeNotFoundException extends RuntimeException {
     public DegreeNotFoundException() {
         super(NOT_FOUND);
     }
+
+    public DegreeNotFoundException(String message) {
+        super(message);
+    }
 }

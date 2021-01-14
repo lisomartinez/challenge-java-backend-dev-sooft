@@ -1,4 +1,4 @@
-package ar.edu.teclab.prueba.service;
+package ar.edu.teclab.prueba.shared;
 
 public class BadRquestException extends RuntimeException {
     public BadRquestException(String message) {

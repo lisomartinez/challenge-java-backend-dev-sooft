@@ -2,14 +2,23 @@ package ar.edu.teclab.prueba.dto;
 
 import ar.edu.teclab.prueba.model.Director;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.Email;
 
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DirectorDto {
+    @UUID
     private String directorId;
+
+    @Size(min = 2, max = 50)
     private String firstName;
+
+    @Size(min = 2, max = 50)
     private String lastName;
+
+    @Email
     private String email;
 
     public DirectorDto() {

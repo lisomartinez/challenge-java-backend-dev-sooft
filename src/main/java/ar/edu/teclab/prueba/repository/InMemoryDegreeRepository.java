@@ -1,6 +1,6 @@
 package ar.edu.teclab.prueba.repository;
 
-import ar.edu.teclab.prueba.DomainException;
+import ar.edu.teclab.prueba.shared.DomainException;
 import ar.edu.teclab.prueba.model.Degree;
 import org.springframework.stereotype.Component;
 

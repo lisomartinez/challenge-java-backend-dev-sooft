@@ -8,9 +8,12 @@ import ar.edu.teclab.prueba.model.Director;
 import ar.edu.teclab.prueba.repository.DegreeRepository;
 import ar.edu.teclab.prueba.repository.InMemoryDegreeRepository;
 import ar.edu.teclab.prueba.service.DegreeService;
+import ar.edu.teclab.prueba.shared.DomainException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +52,8 @@ public class DegreeServiceTest {
                                    Director.create("725d1d64-0ac7-4d09-99ee-0a9920453fe3",
                                                    "Juan",
                                                    "Perez",
-                                                   "juanperez@gmail.com"));
+                                                   "juanperez@gmail.com")
+                , new HashSet<>());
     }
 
     @Test
@@ -122,7 +126,7 @@ public class DegreeServiceTest {
     @Test
     public void canCreateADegree() {
         DegreeService service = new DegreeService(degreeRepository);
-        CreateDegreeDto degreeDto = new CreateDegreeDto("a title", "online", "fcd2d320-6d81-4ea9-827f-8de17542c9b8");
+        CreateDegreeDto degreeDto = new CreateDegreeDto("a title", "online", "fcd2d320-6d81-4ea9-827f-8de17542c9b8", new ArrayList<>());
         Degree savedDegree = service.create(degreeDto);
         assertThat(service.findById(savedDegree.getDegreeId())).isEqualTo(savedDegree);
     }

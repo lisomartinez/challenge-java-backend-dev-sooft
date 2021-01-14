@@ -1,6 +1,7 @@
 package ar.edu.teclab.prueba;
 
 import ar.edu.teclab.prueba.service.TicketService;
+import ar.edu.teclab.prueba.shared.DomainException;
 
 import java.util.*;
 
