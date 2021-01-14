@@ -49,7 +49,7 @@ public class DegreeServiceTest {
         DegreeService service = new DegreeService(degreeRepository);
         Degree degree = createDegree();
         Degree savedDegree = degreeRepository.save(degree);
-        assertThat(service.findById(savedDegree.getDirectorId())).isEqualTo(savedDegree);
+        assertThat(service.findById(savedDegree.getDegreeId())).isEqualTo(savedDegree);
     }
 
     @Test
@@ -67,9 +67,9 @@ public class DegreeServiceTest {
         Degree degree = createDegree();
         Degree savedDegree = degreeRepository.save(degree);
 
-        service.deleteByDirectorId(degree.getDirectorId());
+        service.deleteByDegreeId(degree.getDegreeId());
 
-        assertThatThrownBy(() -> service.findById(degree.getDirectorId()))
+        assertThatThrownBy(() -> service.findById(degree.getDegreeId()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Degree not found");
     }
@@ -79,7 +79,7 @@ public class DegreeServiceTest {
         DegreeService service = new DegreeService(degreeRepository);
         String directorId = "d4f4a37a-0b70-4c3a-8815-48542d556528";
 
-        assertThatThrownBy(() -> service.deleteByDirectorId(directorId))
+        assertThatThrownBy(() -> service.deleteByDegreeId(directorId))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot delete non existing Degree");
     }
@@ -90,7 +90,7 @@ public class DegreeServiceTest {
         Degree degree = createDegree();
         Degree savedDegree = degreeRepository.save(degree);
         Degree degreeForUpdate = createDegree();
-        degreeForUpdate.setDirectorId(savedDegree.getDirectorId());
+        degreeForUpdate.setDegreeId(savedDegree.getDegreeId());
         degreeForUpdate.setTitle("New Title");
         degreeForUpdate.setType(DegreeType.ON_SITE);
 
@@ -103,11 +103,19 @@ public class DegreeServiceTest {
         String directorId = "d4f4a37a-0b70-4c3a-8815-48542d556528";
         DegreeService service = new DegreeService(degreeRepository);
         Degree degreeForUpdate = createDegree();
-        degreeForUpdate.setDirectorId(directorId);
+        degreeForUpdate.setDegreeId(directorId);
         degreeForUpdate.setTitle("New Title");
         degreeForUpdate.setType(DegreeType.ON_SITE);
         assertThatThrownBy(() -> service.update(degreeForUpdate))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot update a non existing Degree");
+    }
+
+    @Test
+    public void canCreateADegree() {
+        DegreeService service = new DegreeService(degreeRepository);
+        CreateDegreeDto degreeDto = new CreateDegreeDto("a title", "online", "fcd2d320-6d81-4ea9-827f-8de17542c9b8");
+        Degree savedDegree = service.create(degreeDto);
+        assertThat(service.findById(savedDegree.getDegreeId())).isEqualTo(savedDegree);
     }
 }

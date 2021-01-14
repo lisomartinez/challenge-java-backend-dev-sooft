@@ -1,7 +1,10 @@
 package ar.edu.teclab.prueba;
 
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 
+@Component
 public class InMemoryDegreeRepository implements DegreeRepository {
     private Map<Long, Degree> degrees;
     private Long lastId = 0L;
@@ -14,7 +17,7 @@ public class InMemoryDegreeRepository implements DegreeRepository {
     public Degree save(Degree degree) {
         lastId++;
         degree.setId(lastId);
-        degree.setDirectorId(UUID.randomUUID().toString());
+        degree.setDegreeId(UUID.randomUUID().toString());
         degrees.put(lastId, degree);
         return degree;
     }
@@ -26,14 +29,14 @@ public class InMemoryDegreeRepository implements DegreeRepository {
 
     @Override
     public Optional<Degree> findByDirectorId(String directorId) {
-        return degrees.values().stream().filter(degree -> degree.getDirectorId().equals(directorId)).findFirst();
+        return degrees.values().stream().filter(degree -> degree.getDegreeId().equals(directorId)).findFirst();
     }
 
     @Override
     public void removeByDirectorId(String directorId) {
         OptionalLong asLong = degrees.entrySet()
                                      .stream()
-                                     .filter(degree -> degree.getValue().getDirectorId().equals(directorId))
+                                     .filter(degree -> degree.getValue().getDegreeId().equals(directorId))
                                      .mapToLong(Map.Entry::getKey)
                                      .findFirst();
         if (asLong.isPresent())  degrees.remove(asLong.getAsLong());
@@ -42,7 +45,7 @@ public class InMemoryDegreeRepository implements DegreeRepository {
 
     @Override
     public Degree update(Degree degreeForUpdate) {
-        Degree forUpdate = findByDirectorId(degreeForUpdate.getDirectorId()).orElseThrow(() -> new DomainException("Cannot update a non existing Degree"));
+        Degree forUpdate = findByDirectorId(degreeForUpdate.getDegreeId()).orElseThrow(() -> new DomainException("Cannot update a non existing Degree"));
         forUpdate.setTitle(degreeForUpdate.getTitle());
         forUpdate.setType(degreeForUpdate.getType());
         return forUpdate;

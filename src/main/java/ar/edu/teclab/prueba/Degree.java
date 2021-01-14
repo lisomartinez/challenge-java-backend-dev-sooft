@@ -8,15 +8,19 @@ import java.util.UUID;
 public class Degree {
     @JsonIgnore
     private Long id;
-    private String directorId;
+    private String degreeId;
     private String title;
     private DegreeType type;
-    private final Director director;
+    private Director director;
 
 
-    private Degree(Long id, String directorId, String title, DegreeType type, Director director) {
+    Degree() {
+
+    }
+
+    private Degree(Long id, String degreeId, String title, DegreeType type, Director director) {
         this.id = id;
-        this.directorId = directorId;
+        this.degreeId = degreeId;
         this.title = title;
         this.type = type;
         this.director = director;
@@ -51,6 +55,7 @@ public class Degree {
 
 
 
+
     public String getTitle() {
         return title;
     }
@@ -63,25 +68,34 @@ public class Degree {
         return director;
     }
 
-    public String getDirectorId() {
-        return directorId;
+    public String getDegreeId() {
+        return degreeId;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Degree)) return false;
         Degree degree = (Degree) o;
-        return getDirectorId().equals(degree.getDirectorId());
+        return getDegreeId().equals(degree.getDegreeId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDirectorId());
+        return Objects.hash(getDegreeId());
     }
 
-    public void setDirectorId(String aDirectorsId) {
-        directorId = aDirectorsId;
+    public void setDegreeId(String aDirectorsId) {
+        degreeId = aDirectorsId;
     }
 
     public void setId(Long anId) {

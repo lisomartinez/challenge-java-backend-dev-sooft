@@ -8,10 +8,14 @@ public class Director {
     private static final Pattern emailValidator =
             Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
 
-    private final String directorId;
-    private final String firstName;
-    private final String lastName;
-    private final String email;
+    private String directorId;
+    private String firstName;
+    private String lastName;
+    private String email;
+
+    Director() {
+
+    }
 
     private Director(String directorId, String firstName, String lastName, String email) {
 
@@ -51,6 +55,43 @@ public class Director {
         }
     }
 
+    public static Pattern getEmailValidator() {
+        return emailValidator;
+    }
+
+    public static Director identifiedAs(String directorId) {
+        Director director = new Director();
+        director.setDirectorId(directorId);
+        return director;
+    }
+
+    public String getDirectorId() {
+        return directorId;
+    }
+
+    public void setDirectorId(String directorId) {
+        this.directorId = directorId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Override
     public boolean equals(Object o) {

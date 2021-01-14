@@ -1,8 +1,11 @@
 package ar.edu.teclab.prueba;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Locale;
+
+@Service
 public class DegreeService {
     private final DegreeRepository degreeRepository;
 
@@ -18,11 +21,18 @@ public class DegreeService {
         return degreeRepository.findByDirectorId(directorId).orElseThrow(() -> new DomainException("Degree not found"));
     }
 
-    public void deleteByDirectorId(String directorId) {
+    public void deleteByDegreeId(String directorId) {
         degreeRepository.removeByDirectorId(directorId);
     }
 
     public Degree update(Degree degreeForUpdate) {
         return degreeRepository.update(degreeForUpdate);
+    }
+
+    public Degree create(CreateDegreeDto degreeDto) {
+        Degree degree = Degree.createDegree(degreeDto.getTitle(),
+                                            DegreeType.valueOf(degreeDto.getType().toUpperCase(Locale.ROOT)),
+                                            Director.identifiedAs(degreeDto.getDirectorId()));
+        return degreeRepository.save(degree);
     }
 }
