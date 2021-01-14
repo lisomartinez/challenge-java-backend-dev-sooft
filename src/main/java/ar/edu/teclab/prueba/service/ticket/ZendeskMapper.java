@@ -1,7 +1,7 @@
-package ar.edu.teclab.prueba.service;
+package ar.edu.teclab.prueba.service.ticket;
 
-import ar.edu.teclab.prueba.Comment;
-import ar.edu.teclab.prueba.model.DomainException;
+import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.model.exceptions.DomainException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

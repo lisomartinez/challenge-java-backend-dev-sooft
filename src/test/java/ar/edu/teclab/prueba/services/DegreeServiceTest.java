@@ -1,4 +1,4 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.services;
 
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.model.Degree;
@@ -8,7 +8,8 @@ import ar.edu.teclab.prueba.model.exceptions.DegreeDomainException;
 import ar.edu.teclab.prueba.model.exceptions.DegreeNotFoundException;
 import ar.edu.teclab.prueba.repository.DegreeRepository;
 import ar.edu.teclab.prueba.repository.DirectorRepository;
-import ar.edu.teclab.prueba.service.DegreeService;
+import ar.edu.teclab.prueba.service.degree.DegreeService;
+import ar.edu.teclab.prueba.utils.TestObjectFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DataJpaTest
 @Transactional
 public class DegreeServiceTest {
-    private TestObjectFactory objectFactory = new TestObjectFactory();
+    private final TestObjectFactory objectFactory = new TestObjectFactory();
 
     DegreeService service;
     @Autowired
@@ -92,7 +93,7 @@ public class DegreeServiceTest {
     public void canDeleteExistingDegrees() {
 
         Degree degree = objectFactory.createDegree(director);
-        Degree savedDegree = degreeRepository.save(degree);
+        degreeRepository.save(degree);
 
         service.deleteByDegreeId(degree.getDegreeId());
 

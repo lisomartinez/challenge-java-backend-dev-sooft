@@ -4,7 +4,7 @@ import ar.edu.teclab.prueba.controller.exceptions.ErrorMessage;
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.dto.DegreeDto;
 import ar.edu.teclab.prueba.model.Degree;
-import ar.edu.teclab.prueba.service.DegreeService;
+import ar.edu.teclab.prueba.service.degree.DegreeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,7 +24,8 @@ import java.util.stream.Collectors;
 public class DegreeController {
     public static final String DEGREES = "/degrees";
     public static final String APPLICATION_JSON = "application/json";
-    private DegreeService service;
+    public static final String DEGREE_ID = "/{degreeId}";
+    private final DegreeService service;
 
     @Autowired
     public DegreeController(DegreeService service) {
@@ -36,9 +37,14 @@ public class DegreeController {
             @ApiResponse(responseCode = "201", description = "Degree created"),
     })
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DegreeDto> create(@RequestBody CreateDegreeDto degreeDto) {
         Degree created = service.create(degreeDto);
-        return ResponseEntity.created(URI.create("/degrees/" + created.getDegreeId())).body(DegreeDto.from(created));
+        return ResponseEntity.created(createUri(created)).body(DegreeDto.from(created));
+    }
+
+    private URI createUri(Degree created) {
+        return URI.create("/degrees/" + created.getDegreeId());
     }
 
 
@@ -51,7 +57,7 @@ public class DegreeController {
                                     schema = @Schema(implementation = ErrorMessage.class))
                     })
     })
-    @GetMapping("/{degreeId}")
+    @GetMapping(DEGREE_ID)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DegreeDto> getById(@PathVariable String degreeId) {
         Degree degree = service.findById(degreeId);
@@ -68,37 +74,38 @@ public class DegreeController {
         return ResponseEntity.ok(degrees);
     }
 
-
-    @Operation(summary = "Delete a Degree")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Degree deleted"),
-            @ApiResponse(responseCode = "404", description = "Degree not found",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ErrorMessage.class))
-                    })
-    })
-    @DeleteMapping(value = "/{degreeId}")
-    public ResponseEntity<Void> delete(@PathVariable String degreeId) {
-        service.deleteByDegreeId(degreeId);
-        return ResponseEntity.noContent().build();
-    }
-
     @Operation(summary = "Update a Degree")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Degree updated"),
-            @ApiResponse(responseCode = "404", description = "Degree not found",
+            @ApiResponse(responseCode = "400", description = "Degree not found",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorMessage.class))
                     })
     })
     @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DegreeDto> update(@RequestBody DegreeDto degree) {
         Degree degreeForUpdate = degree.toEntity();
         Degree updatedDegree = service.update(degreeForUpdate);
         DegreeDto from = DegreeDto.from(updatedDegree);
         return ResponseEntity.ok(from);
+    }
+
+    @Operation(summary = "Delete a Degree")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Degree deleted"),
+            @ApiResponse(responseCode = "400", description = "Degree not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorMessage.class))
+                    })
+    })
+    @DeleteMapping(value = DEGREE_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> delete(@PathVariable String degreeId) {
+        service.deleteByDegreeId(degreeId);
+        return ResponseEntity.noContent().build();
     }
 
 }

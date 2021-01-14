@@ -1,7 +1,7 @@
 package ar.edu.teclab.prueba.controller;
 
-import ar.edu.teclab.prueba.Comment;
-import ar.edu.teclab.prueba.service.TicketService;
+import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.service.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,8 @@ import java.util.List;
 public class TicketController {
     public static final String COMMENTS = "/{id}/comments";
     public static final String TICKETS = "/tickets";
+    public static final String ID = "/{id}";
+    public static final String APPLICATION_JSON = "application/json";
 
     private TicketService ticketService;
 
@@ -24,21 +26,21 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping(COMMENTS)
+    @GetMapping(value = COMMENTS, produces = APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Comment>> getComments(HttpServletRequest request, @PathVariable int id) {
         List<Comment> comments = ticketService.getCommentsOfTicket(id);
         return ResponseEntity.ok(comments);
     }
 
-    @GetMapping(value = COMMENTS + "/test", produces = "application/json")
+    @GetMapping(value = COMMENTS + "/test", produces = APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> getCommentsTest(HttpServletRequest request, @PathVariable int id) {
         String comments = ticketService.getCommentsOfTicketTest(id);
         return ResponseEntity.ok(comments);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = ID, produces = APPLICATION_JSON)
     public ResponseEntity<Comment> addComment(@PathVariable int id, @RequestBody Comment comment) {
         Comment addedComment = ticketService.addCommentToTicket(id, comment);
         return ResponseEntity.ok(addedComment);

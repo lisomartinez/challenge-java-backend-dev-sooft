@@ -1,7 +1,6 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.model;
 
-import ar.edu.teclab.prueba.model.Director;
-import ar.edu.teclab.prueba.model.DomainException;
+import ar.edu.teclab.prueba.model.exceptions.DomainException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -9,7 +8,6 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RunWith(Parameterized.class)

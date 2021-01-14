@@ -1,5 +1,6 @@
 package ar.edu.teclab.prueba.model;
 
+import ar.edu.teclab.prueba.model.exceptions.DomainException;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Entity;

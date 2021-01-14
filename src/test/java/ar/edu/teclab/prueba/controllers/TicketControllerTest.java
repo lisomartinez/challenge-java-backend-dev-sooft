@@ -1,9 +1,10 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.controllers;
 
 import ar.edu.teclab.prueba.controller.TicketController;
 import ar.edu.teclab.prueba.controller.exceptions.ErrorMessage;
-import ar.edu.teclab.prueba.dto.TicketNotFoundDomainException;
-import ar.edu.teclab.prueba.service.TicketService;
+import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.service.ticket.TicketService;
+import ar.edu.teclab.prueba.shared.TicketNotFoundDomainException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;

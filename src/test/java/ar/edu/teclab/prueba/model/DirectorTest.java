@@ -1,11 +1,9 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.model;
 
 
-import ar.edu.teclab.prueba.model.Director;
-import ar.edu.teclab.prueba.model.DomainException;
+import ar.edu.teclab.prueba.model.exceptions.DomainException;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DirectorTest {

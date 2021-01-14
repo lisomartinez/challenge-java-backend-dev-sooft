@@ -1,9 +1,10 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.functional;
 
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.dto.DegreeDto;
 import ar.edu.teclab.prueba.dto.DirectorDto;
 import ar.edu.teclab.prueba.model.Director;
+import ar.edu.teclab.prueba.utils.TestObjectFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

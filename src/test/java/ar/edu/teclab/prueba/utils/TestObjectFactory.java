@@ -1,5 +1,6 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.utils;
 
+import ar.edu.teclab.prueba.controllers.DegreeControllerTest;
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.dto.DegreeDto;
 import ar.edu.teclab.prueba.dto.DirectorDto;
@@ -15,7 +16,7 @@ public class TestObjectFactory {
     public static final String DEGREE_ID = "d5dac498-7ad7-4bf7-b94b-c3b283311242";
     public static final String OTHER_DEGREE_ID = "f4a10e03-9cf3-4dd1-8909-68cd01948546";
 
-    Degree createDegree() {
+    public Degree createDegree() {
         return Degree.aDegree()
                      .setDegreeId(DEGREE_ID)
                      .setTitle("degree title")
@@ -28,11 +29,11 @@ public class TestObjectFactory {
                      .build();
     }
 
-    CreateDegreeDto createCreateDegreeDto() {
+    public CreateDegreeDto createCreateDegreeDto() {
         return new CreateDegreeDto("degree title", "online", DegreeControllerTest.DIRECTOR_ID, new ArrayList<>());
     }
 
-    DegreeDto createDegreeDto() {
+    public DegreeDto createDegreeDto() {
         Degree degree = createDegree();
         degree.setDegreeId(DegreeControllerTest.DEGREE_ID);
         return DegreeDto.from(degree);

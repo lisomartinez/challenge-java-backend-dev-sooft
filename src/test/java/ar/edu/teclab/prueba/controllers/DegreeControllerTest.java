@@ -1,11 +1,12 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.controllers;
 
 import ar.edu.teclab.prueba.controller.DegreeController;
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.dto.DegreeDto;
 import ar.edu.teclab.prueba.model.Degree;
 import ar.edu.teclab.prueba.model.exceptions.DegreeNotFoundException;
-import ar.edu.teclab.prueba.service.DegreeService;
+import ar.edu.teclab.prueba.service.degree.DegreeService;
+import ar.edu.teclab.prueba.utils.TestObjectFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +34,7 @@ public class DegreeControllerTest {
     public static final String DEGREE_ID = "d5dac498-7ad7-4bf7-b94b-c3b283311242";
     public static final String DEGREES = "/degrees";
     public static final String DEGREES_DEGREE_ID = "/degrees/{degreeId}";
-    private TestObjectFactory objectFactory = new TestObjectFactory();
+    private final TestObjectFactory objectFactory = new TestObjectFactory();
 
     @Autowired
     private MockMvc mvc;

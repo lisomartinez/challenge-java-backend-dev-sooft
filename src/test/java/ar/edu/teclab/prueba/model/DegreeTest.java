@@ -1,6 +1,6 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.model;
 
-import ar.edu.teclab.prueba.model.*;
+import ar.edu.teclab.prueba.model.exceptions.DomainException;
 import org.junit.Test;
 
 import java.util.HashSet;

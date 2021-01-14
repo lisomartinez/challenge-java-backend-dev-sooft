@@ -1,16 +1,16 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.services;
 
 import ar.edu.teclab.prueba.model.Director;
-import ar.edu.teclab.prueba.model.DirectorDomainException;
-import ar.edu.teclab.prueba.model.DirectorNotFoundException;
+import ar.edu.teclab.prueba.model.exceptions.DirectorDomainException;
+import ar.edu.teclab.prueba.model.exceptions.DirectorNotFoundException;
 import ar.edu.teclab.prueba.repository.DirectorRepository;
-import ar.edu.teclab.prueba.service.DirectorService;
+import ar.edu.teclab.prueba.service.degree.DirectorService;
+import ar.edu.teclab.prueba.utils.TestObjectFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
@@ -23,13 +23,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DataJpaTest
 @Transactional
 public class DirectorServiceTest {
-    private TestObjectFactory objectFactory = new TestObjectFactory();
+    private final TestObjectFactory objectFactory = new TestObjectFactory();
 
     @Autowired
     private DirectorRepository directorRepository;
 
-    @Autowired
-    private TestEntityManager entityManager;
 
     private DirectorService service;
 
@@ -74,7 +72,7 @@ public class DirectorServiceTest {
     public void canDeleteExistingDirectors() {
 
         Director director = objectFactory.createDirector();
-        Director savedDirector = directorRepository.save(director);
+        directorRepository.save(director);
 
         service.deleteByDirectorId(director.getDirectorId());
 

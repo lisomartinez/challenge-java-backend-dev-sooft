@@ -1,6 +1,6 @@
-package ar.edu.teclab.prueba.service;
+package ar.edu.teclab.prueba.service.ticket;
 
-import ar.edu.teclab.prueba.Comment;
+import ar.edu.teclab.prueba.dto.Comment;
 
 import java.util.List;
 

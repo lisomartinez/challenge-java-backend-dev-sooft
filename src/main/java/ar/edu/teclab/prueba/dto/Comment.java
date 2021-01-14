@@ -1,4 +1,4 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

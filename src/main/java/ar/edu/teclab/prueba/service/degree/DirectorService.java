@@ -1,8 +1,8 @@
-package ar.edu.teclab.prueba.service;
+package ar.edu.teclab.prueba.service.degree;
 
 import ar.edu.teclab.prueba.model.Director;
-import ar.edu.teclab.prueba.model.DirectorDomainException;
-import ar.edu.teclab.prueba.model.DirectorNotFoundException;
+import ar.edu.teclab.prueba.model.exceptions.DirectorDomainException;
+import ar.edu.teclab.prueba.model.exceptions.DirectorNotFoundException;
 import ar.edu.teclab.prueba.repository.DirectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

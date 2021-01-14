@@ -1,4 +1,4 @@
-package ar.edu.teclab.prueba.model;
+package ar.edu.teclab.prueba.model.exceptions;
 
 
 public class DirectorNotFoundException extends DomainException {

@@ -1,6 +1,5 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.model;
 
-import ar.edu.teclab.prueba.model.Director;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

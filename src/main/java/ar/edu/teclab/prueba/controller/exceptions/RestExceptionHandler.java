@@ -1,12 +1,8 @@
 package ar.edu.teclab.prueba.controller.exceptions;
 
-import ar.edu.teclab.prueba.dto.TicketNotFoundDomainException;
-import ar.edu.teclab.prueba.model.DirectorDomainException;
-import ar.edu.teclab.prueba.model.DirectorNotFoundException;
-import ar.edu.teclab.prueba.model.DomainException;
-import ar.edu.teclab.prueba.model.exceptions.DegreeDomainException;
-import ar.edu.teclab.prueba.model.exceptions.DegreeNotFoundException;
+import ar.edu.teclab.prueba.model.exceptions.*;
 import ar.edu.teclab.prueba.shared.BadRquestException;
+import ar.edu.teclab.prueba.shared.TicketNotFoundDomainException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

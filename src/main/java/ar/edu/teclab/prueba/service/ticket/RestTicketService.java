@@ -1,6 +1,6 @@
-package ar.edu.teclab.prueba.service;
+package ar.edu.teclab.prueba.service.ticket;
 
-import ar.edu.teclab.prueba.Comment;
+import ar.edu.teclab.prueba.dto.Comment;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

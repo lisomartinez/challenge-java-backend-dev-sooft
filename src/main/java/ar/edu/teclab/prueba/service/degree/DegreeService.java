@@ -1,4 +1,4 @@
-package ar.edu.teclab.prueba.service;
+package ar.edu.teclab.prueba.service.degree;
 
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.model.Degree;

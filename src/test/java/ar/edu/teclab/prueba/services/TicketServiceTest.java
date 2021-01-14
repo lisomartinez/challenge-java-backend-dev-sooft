@@ -1,10 +1,13 @@
-package ar.edu.teclab.prueba;
-import static org.assertj.core.api.Assertions.*;
+package ar.edu.teclab.prueba.services;
 
-import ar.edu.teclab.prueba.model.DomainException;
+import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.model.exceptions.DomainException;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TicketServiceTest {
 

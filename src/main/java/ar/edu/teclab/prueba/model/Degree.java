@@ -1,5 +1,7 @@
 package ar.edu.teclab.prueba.model;
 
+import ar.edu.teclab.prueba.model.exceptions.DomainException;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
