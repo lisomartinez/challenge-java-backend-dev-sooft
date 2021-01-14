@@ -10,15 +10,16 @@ import java.util.Objects;
 public class Comment {
 
     @JsonProperty
-    private final long id;
+    private long id;
 
-    @JsonProperty
-    private final String body;
+    private String body;
 
-    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Comment(@JsonProperty("id") long id, @JsonProperty("body") String body) {
+    public Comment(long id, String body) {
         this.id = id;
         this.body = body;
+    }
+
+    public Comment() {
     }
 
     @Override
@@ -40,5 +41,21 @@ public class Comment {
                 "id=" + id +
                 ", body='" + body + '\'' +
                 '}';
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long createdCommentId) {
+        id = createdCommentId;
     }
 }

@@ -10,4 +10,6 @@ public interface TicketService {
     void commentOnTicket(int ticketId, Comment aComment);
 
     String getCommentsOfTicketTest(int id);
+
+    Comment addCommentToTicket(int id, Comment comment);
 }

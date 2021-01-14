@@ -39,6 +39,11 @@ public class LocalTicketService implements TicketService {
         return null;
     }
 
+    @Override
+    public Comment addCommentToTicket(int id, Comment comment) {
+        return null;
+    }
+
     public void addTicket(int ticket) {
         tickets.put(ticket, new ArrayList<>());
     }

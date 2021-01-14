@@ -25,6 +25,12 @@ import java.util.Map;
 @Service
 public class RestTicketService implements TicketService {
     public static final String TICKET_BASE_URL = "https://teclab1593636133.zendesk.com/api/v2/tickets";
+    public static final String TICKET = "ticket";
+    public static final String COMMENT = "comment";
+    public static final String BODY = "body";
+    public static final String AUDIT = "audit";
+    public static final String EVENTS = "events";
+    public static final int FIRST_EVENT = 0;
 
     private RestTemplate httpClient;
     private ObjectMapper objectMapper;
@@ -80,8 +86,51 @@ public class RestTicketService implements TicketService {
 
     @Override
     public String getCommentsOfTicketTest(int id) {
-        ResponseEntity<ObjectNode> response = httpClient.getForEntity(urlFromTicketId(id), ObjectNode.class);
+        String url = "/" + id + "/comments.json";
+        ResponseEntity<ObjectNode> response = httpClient.getForEntity(url, ObjectNode.class);
         return response.getBody().get("comments").toString();
+    }
+
+    @Override
+    public Comment addCommentToTicket(int id, Comment comment) {
+        String url = "/" + id;
+        HttpEntity<ObjectNode> request = createRequestFrom(comment);
+        ResponseEntity<ObjectNode> response = httpClient.exchange(url, HttpMethod.PUT, request, ObjectNode.class);
+        return parseResponse(comment, response);
+    }
+
+    private Comment parseResponse(Comment comment, ResponseEntity<ObjectNode> response) {
+        long createdCommentId = getCommentIdFrom(response);
+        comment.setId(createdCommentId);
+        return comment;
+    }
+
+    private long getCommentIdFrom(ResponseEntity<ObjectNode> response) {
+        ObjectNode body = response.getBody();
+        JsonNode audit = body.get(AUDIT);
+        JsonNode events = audit.get(EVENTS);
+        JsonNode firstEvent = events.get(FIRST_EVENT);
+        return firstEvent.get("id").asLong();
+    }
+
+    private HttpEntity<ObjectNode> createRequestFrom(Comment comment) {
+        ObjectNode root = objectMapper.createObjectNode();
+        ObjectNode commentBodyNode = createBody(comment);
+        ObjectNode commentNode = createComment(commentBodyNode);
+        root.set(TICKET, commentNode);
+        return new HttpEntity<>(root);
+    }
+
+    private ObjectNode createComment(ObjectNode commentBodyNode) {
+        ObjectNode commentNode = objectMapper.createObjectNode();
+        commentNode.set(COMMENT, commentBodyNode);
+        return commentNode;
+    }
+
+    private ObjectNode createBody(Comment comment) {
+        ObjectNode commentBodyNode = objectMapper.createObjectNode();
+        commentBodyNode.put(BODY, comment.getBody());
+        return commentBodyNode;
     }
 
 }

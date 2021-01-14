@@ -39,4 +39,10 @@ public class TicketController {
         String comments = ticketService.getCommentsOfTicketTest(id);
         return ResponseEntity.ok(comments);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Comment> addComment(@PathVariable int id, @RequestBody Comment comment) {
+        Comment addedComment = ticketService.addCommentToTicket(id, comment);
+        return ResponseEntity.ok(addedComment);
+    }
 }
