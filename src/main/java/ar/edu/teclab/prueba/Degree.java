@@ -1,26 +1,34 @@
 package ar.edu.teclab.prueba;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 import java.util.UUID;
 
 public class Degree {
-    private final String id;
-    private final String title;
-    private final DegreeType type;
+    @JsonIgnore
+    private Long id;
+    private String directorId;
+    private String title;
+    private DegreeType type;
     private final Director director;
 
-    private Degree(String id, String title, DegreeType type, Director director) {
+
+    private Degree(Long id, String directorId, String title, DegreeType type, Director director) {
         this.id = id;
+        this.directorId = directorId;
         this.title = title;
         this.type = type;
         this.director = director;
     }
-
-    public static Degree createDegree(String id, String title, DegreeType type, Director director) {
-        assertThatIdHasUUIDFormat(id);
+    public static Degree createDegree(String title, DegreeType type, Director director) {
+        return new Degree(null, null, title, type, director);
+    }
+    public static Degree createDegree(String directorId, String title, DegreeType type, Director director) {
+        assertThatIdHasUUIDFormat(directorId);
         assertThatTitleIsPresent(title);
         assertThatHasADirector(director);
-        return new Degree(id, title, type, director);
+        return new Degree(null, directorId, title, type, director);
     }
 
     private static void assertThatHasADirector(Director director) {
@@ -41,6 +49,8 @@ public class Degree {
         if (title == null || title.trim().isEmpty()) throw new DomainException("Cannot create a Degree without title.");
     }
 
+
+
     public String getTitle() {
         return title;
     }
@@ -53,8 +63,8 @@ public class Degree {
         return director;
     }
 
-    public String getId() {
-        return id;
+    public String getDirectorId() {
+        return directorId;
     }
 
     @Override
@@ -62,11 +72,27 @@ public class Degree {
         if (this == o) return true;
         if (!(o instanceof Degree)) return false;
         Degree degree = (Degree) o;
-        return getId().equals(degree.getId());
+        return getDirectorId().equals(degree.getDirectorId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getDirectorId());
+    }
+
+    public void setDirectorId(String aDirectorsId) {
+        directorId = aDirectorsId;
+    }
+
+    public void setId(Long anId) {
+        id = anId;
+    }
+
+    public void setTitle(String newTitle) {
+        title = newTitle;
+    }
+
+    public void setType(DegreeType newType) {
+        type = newType;
     }
 }

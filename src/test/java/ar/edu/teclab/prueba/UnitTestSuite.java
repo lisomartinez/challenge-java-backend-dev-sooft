@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        DegreeServiceTest.class,
         DegreeTest.class,
         DirectorInvalidEmailTest.class,
         DirectorTest.class,
