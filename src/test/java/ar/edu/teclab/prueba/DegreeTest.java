@@ -1,8 +1,9 @@
 package ar.edu.teclab.prueba;
 
+import ar.edu.teclab.prueba.model.Degree;
+import ar.edu.teclab.prueba.model.DegreeType;
+import ar.edu.teclab.prueba.model.Director;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

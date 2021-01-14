@@ -19,6 +19,7 @@ public class LocalTicketService implements TicketService {
         return tickets.getOrDefault(ticketId, new ArrayList<>());
     }
 
+
     private void assertThatTicketExists(int ticketId, String s) {
         if (!tickets.containsKey(ticketId)) {
             throw new DomainException(s);
@@ -30,6 +31,11 @@ public class LocalTicketService implements TicketService {
         assertThatTicketExists(ticketId, CANNOT_COMMENT_ON_NON_EXISTENT_TICKET);
         List<Comment> comments = this.tickets.get(ticketId);
         comments.add(aComment);
+    }
+
+    @Override
+    public String getCommentsOfTicketTest(int id) {
+        return null;
     }
 
     public void addTicket(int ticket) {

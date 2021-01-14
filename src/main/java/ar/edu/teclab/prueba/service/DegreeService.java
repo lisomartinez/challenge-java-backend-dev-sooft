@@ -1,5 +1,8 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.service;
 
+import ar.edu.teclab.prueba.dto.CreateDegreeDto;
+import ar.edu.teclab.prueba.model.*;
+import ar.edu.teclab.prueba.repository.DegreeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,16 +20,25 @@ public class DegreeService {
         return degreeRepository.findAll();
     }
 
-    public Degree findById(String directorId) {
-        return degreeRepository.findByDirectorId(directorId).orElseThrow(() -> new DomainException("Degree not found"));
+    public Degree findById(String degreeId) {
+        return degreeRepository.findByDirectorId(degreeId).orElseThrow(DegreeNotFoundException::new);
     }
 
-    public void deleteByDegreeId(String directorId) {
-        degreeRepository.removeByDirectorId(directorId);
+    public void deleteByDegreeId(String degreeId) {
+        try {
+            degreeRepository.removeByDirectorId(degreeId);
+        } catch (IllegalArgumentException ex) {
+            throw new DegreeDomainException("Cannot delete non existing Degree");
+        }
+
     }
 
     public Degree update(Degree degreeForUpdate) {
-        return degreeRepository.update(degreeForUpdate);
+        try {
+            return degreeRepository.update(degreeForUpdate);
+        } catch (IllegalArgumentException ex) {
+            throw new DegreeDomainException("Cannot update a non existing Degree");
+        }
     }
 
     public Degree create(CreateDegreeDto degreeDto) {

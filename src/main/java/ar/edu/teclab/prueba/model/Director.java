@@ -1,4 +1,6 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.model;
+
+import ar.edu.teclab.prueba.DomainException;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -17,12 +19,16 @@ public class Director {
 
     }
 
-    private Director(String directorId, String firstName, String lastName, String email) {
+    public Director(String directorId, String firstName, String lastName, String email) {
 
         this.directorId = directorId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public Director(String directorId) {
+        this.directorId = directorId;
     }
 
     public static Director create(String directorId, String firstName, String lastName, String email) {

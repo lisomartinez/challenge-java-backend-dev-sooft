@@ -1,7 +1,10 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.model;
 
+import ar.edu.teclab.prueba.DomainException;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,6 +21,13 @@ public class Degree {
 
     }
 
+    public Degree(String degreeId, String title, DegreeType type, Director director) {
+        this.degreeId = degreeId;
+        this.title = title;
+        this.type = type;
+        this.director = director;
+    }
+
     private Degree(Long id, String degreeId, String title, DegreeType type, Director director) {
         this.id = id;
         this.degreeId = degreeId;
@@ -25,9 +35,12 @@ public class Degree {
         this.type = type;
         this.director = director;
     }
+
     public static Degree createDegree(String title, DegreeType type, Director director) {
         return new Degree(null, null, title, type, director);
     }
+
+
     public static Degree createDegree(String directorId, String title, DegreeType type, Director director) {
         assertThatIdHasUUIDFormat(directorId);
         assertThatTitleIsPresent(title);
@@ -54,8 +67,6 @@ public class Degree {
     }
 
 
-
-
     public String getTitle() {
         return title;
     }
@@ -80,20 +91,6 @@ public class Degree {
         this.director = director;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Degree)) return false;
-        Degree degree = (Degree) o;
-        return getDegreeId().equals(degree.getDegreeId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getDegreeId());
-    }
-
     public void setDegreeId(String aDirectorsId) {
         degreeId = aDirectorsId;
     }
@@ -108,5 +105,34 @@ public class Degree {
 
     public void setType(DegreeType newType) {
         type = newType;
+    }
+
+    @JsonGetter("type")
+    public String getLowerCaseType() {
+        return type.toString().toLowerCase(Locale.ROOT);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDegreeId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Degree)) return false;
+        Degree degree = (Degree) o;
+        return getDegreeId().equals(degree.getDegreeId());
+    }
+
+    @Override
+    public String toString() {
+        return "Degree{" +
+                "id=" + id +
+                ", degreeId='" + degreeId + '\'' +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                ", director=" + director +
+                '}';
     }
 }

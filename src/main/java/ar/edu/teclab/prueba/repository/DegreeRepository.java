@@ -1,4 +1,6 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.repository;
+
+import ar.edu.teclab.prueba.model.Degree;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +10,9 @@ public interface DegreeRepository {
 
     List<Degree> findAll();
 
-    Optional<Degree> findByDirectorId(String directorId);
+    Optional<Degree> findByDirectorId(String degreeId);
 
-    void removeByDirectorId(String directorId);
+    void removeByDirectorId(String degreeId);
 
     Degree update(Degree degreeForUpdate);
 }

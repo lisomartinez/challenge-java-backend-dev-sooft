@@ -1,5 +1,13 @@
 package ar.edu.teclab.prueba;
 
+import ar.edu.teclab.prueba.dto.CreateDegreeDto;
+import ar.edu.teclab.prueba.model.Degree;
+import ar.edu.teclab.prueba.model.DegreeNotFoundException;
+import ar.edu.teclab.prueba.model.DegreeType;
+import ar.edu.teclab.prueba.model.Director;
+import ar.edu.teclab.prueba.repository.DegreeRepository;
+import ar.edu.teclab.prueba.repository.InMemoryDegreeRepository;
+import ar.edu.teclab.prueba.service.DegreeService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,7 +65,7 @@ public class DegreeServiceTest {
         DegreeService service = new DegreeService(degreeRepository);
         String directorId = "d4f4a37a-0b70-4c3a-8815-48542d556528";
         assertThatThrownBy(() -> service.findById(directorId))
-                .isExactlyInstanceOf(DomainException.class)
+                .isExactlyInstanceOf(DegreeNotFoundException.class)
                 .hasMessage("Degree not found");
     }
 
@@ -70,7 +78,7 @@ public class DegreeServiceTest {
         service.deleteByDegreeId(degree.getDegreeId());
 
         assertThatThrownBy(() -> service.findById(degree.getDegreeId()))
-                .isExactlyInstanceOf(DomainException.class)
+                .isExactlyInstanceOf(DegreeNotFoundException.class)
                 .hasMessage("Degree not found");
     }
 
@@ -80,7 +88,7 @@ public class DegreeServiceTest {
         String directorId = "d4f4a37a-0b70-4c3a-8815-48542d556528";
 
         assertThatThrownBy(() -> service.deleteByDegreeId(directorId))
-                .isExactlyInstanceOf(DomainException.class)
+                .isExactlyInstanceOf(DegreeNotFoundException.class)
                 .hasMessage("Cannot delete non existing Degree");
     }
 

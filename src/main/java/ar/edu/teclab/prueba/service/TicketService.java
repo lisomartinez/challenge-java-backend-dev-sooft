@@ -8,4 +8,6 @@ public interface TicketService {
     List<Comment> getCommentsOfTicket(int ticketId);
 
     void commentOnTicket(int ticketId, Comment aComment);
+
+    String getCommentsOfTicketTest(int id);
 }

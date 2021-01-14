@@ -1,6 +1,7 @@
 package ar.edu.teclab.prueba;
 
 import ar.edu.teclab.prueba.controller.TicketController;
+import ar.edu.teclab.prueba.dto.TicketNotFoundDomainException;
 import ar.edu.teclab.prueba.service.TicketService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -41,7 +41,7 @@ public class TicketControllerTest {
     private ObjectMapper mapper;
 
     @Test
-    public void test() throws Exception {
+    public void canGetCommentsOfTicket() throws Exception {
         when(ticketService.getCommentsOfTicket(9)).thenReturn(commentList());
 
         String ticketId = "9";
@@ -67,7 +67,7 @@ public class TicketControllerTest {
     }
 
     @Test
-    public void test2() throws Exception {
+    public void canGetEmptyListOfCommentsOfTicket() throws Exception {
         when(ticketService.getCommentsOfTicket(9)).thenReturn(emptyCommentList());
 
         String ticketId = "10";
@@ -80,8 +80,8 @@ public class TicketControllerTest {
     }
 
     @Test
-    public void test3() throws Exception {
-        when(ticketService.getCommentsOfTicket(12)).thenThrow(new DomainException("Cannot get comments of non-existent tickets"));
+    public void cannotGetCommentOfNonExistingTicket() throws Exception {
+        when(ticketService.getCommentsOfTicket(12)).thenThrow(new TicketNotFoundDomainException());
 
         ErrorMessage expectedError = ErrorMessage.anErrorMessage()
                 .setMessage("Cannot get comments of non-existent tickets")

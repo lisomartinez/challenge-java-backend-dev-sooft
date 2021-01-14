@@ -1,12 +1,8 @@
 package ar.edu.teclab.prueba;
 
 
+import ar.edu.teclab.prueba.model.Director;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
