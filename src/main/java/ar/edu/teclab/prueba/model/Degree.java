@@ -2,8 +2,7 @@ package ar.edu.teclab.prueba.model;
 
 import java.util.*;
 
-public class Degree {
-    private Long id;
+public class Degree extends Entity {
     private String degreeId;
     private String title;
     private DegreeType type;
@@ -11,7 +10,7 @@ public class Degree {
     private Set<Subject> studyPlan;
 
     private Degree(Long id, String degreeId, String title, DegreeType type, Director director, Set<Subject> studyPlan) {
-        this.id = id;
+        super(id);
         this.degreeId = degreeId;
         this.title = title;
         this.type = type;
@@ -20,7 +19,7 @@ public class Degree {
     }
 
     public Degree(DegreeBuilder builder) {
-        this.id = builder.id;
+        super(builder.id);
         this.degreeId = builder.degreeId;
         this.title = builder.title;
         this.type = builder.type;
@@ -60,8 +59,8 @@ public class Degree {
         degreeId = aDirectorsId;
     }
 
-    public void setId(Long anId) {
-        id = anId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setTitle(String newTitle) {

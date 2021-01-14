@@ -1,6 +1,8 @@
 package ar.edu.teclab.prueba.model.exceptions;
 
-public class DegreeNotFoundException extends RuntimeException {
+import ar.edu.teclab.prueba.model.DomainException;
+
+public class DegreeNotFoundException extends DomainException {
     public static final String NOT_FOUND = "Degree not found";
 
     public DegreeNotFoundException() {

@@ -1,12 +1,12 @@
 package ar.edu.teclab.prueba.repository;
 
-import ar.edu.teclab.prueba.model.DomainException;
 import ar.edu.teclab.prueba.model.Degree;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Component
+@Repository
 public class InMemoryDegreeRepository implements DegreeRepository {
     private Map<Long, Degree> degrees;
     private Long lastId = 0L;
@@ -30,12 +30,12 @@ public class InMemoryDegreeRepository implements DegreeRepository {
     }
 
     @Override
-    public Optional<Degree> findByDirectorId(String degreeId) {
+    public Optional<Degree> findById(String degreeId) {
         return degrees.values().stream().filter(degree -> degree.getDegreeId().equals(degreeId)).findFirst();
     }
 
     @Override
-    public void removeByDirectorId(String degreeId) {
+    public void deleteById(String degreeId) {
         OptionalLong asLong = degrees.entrySet()
                                      .stream()
                                      .filter(degree -> degree.getValue().getDegreeId().equals(degreeId))
@@ -48,12 +48,7 @@ public class InMemoryDegreeRepository implements DegreeRepository {
 
     @Override
     public Degree update(Degree degreeForUpdate) {
-        System.out.println("==============================");
-        degrees.forEach((aLong, degree) -> System.out.println(degree));
-        System.out.println("==============================");
-        System.out.println(degreeForUpdate);
-        System.out.println("==============================");
-        Degree forUpdate = findByDirectorId(degreeForUpdate.getDegreeId()).orElseThrow(() -> new DomainException("Cannot update a non existing Degree"));
+        Degree forUpdate = findById(degreeForUpdate.getDegreeId()).orElseThrow(() -> new IllegalArgumentException("Cannot update a non existing Degree"));
         forUpdate.setTitle(degreeForUpdate.getTitle());
         forUpdate.setType(degreeForUpdate.getType());
         return forUpdate;

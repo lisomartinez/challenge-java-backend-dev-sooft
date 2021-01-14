@@ -4,6 +4,7 @@ import ar.edu.teclab.prueba.controller.DegreeController;
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.dto.DegreeDto;
 import ar.edu.teclab.prueba.model.Degree;
+import ar.edu.teclab.prueba.model.exceptions.DegreeNotFoundException;
 import ar.edu.teclab.prueba.service.DegreeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -20,8 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,10 +51,10 @@ public class DegreeControllerTest {
 
         String content = mapper.writeValueAsString(createDegreeDto);
         MvcResult response = mvc.perform(post("/degrees").contentType(MediaType.APPLICATION_JSON)
-                                                          .content(content))
-                                 .andDo(print())
-                                 .andExpect(status().isCreated())
-                                 .andReturn();
+                                                         .content(content))
+                                .andDo(print())
+                                .andExpect(status().isCreated())
+                                .andReturn();
         assertThatCreatedDegreeIsEqualTo(response, expectedResponse, createDegreeDto);
     }
 
@@ -64,23 +64,49 @@ public class DegreeControllerTest {
         String degreeId = DEGREE_ID;
         doNothing().when(degreeService).deleteByDegreeId(degreeId);
 
-        MvcResult response = mvc.perform(delete("/degrees/{degreeId}", degreeId)
-                                                 .contentType(MediaType.APPLICATION_JSON))
-                                .andDo(print())
-                                .andExpect(status().isNoContent())
-                                .andReturn();
+        mvc.perform(delete("/degrees/{degreeId}", degreeId)
+                            .contentType(MediaType.APPLICATION_JSON))
+           .andDo(print())
+           .andExpect(status().isNoContent())
+           .andReturn();
+    }
+
+    @Test
+    public void cannotDeleteANonExistentDegree() throws Exception {
+
+        doThrow(DegreeNotFoundException.class).when(degreeService).deleteByDegreeId(TestObjectFactory.DEGREE_ID);
+
+        mvc.perform(delete("/degrees/{degreeId}", TestObjectFactory.DEGREE_ID))
+           .andDo(print())
+           .andExpect(status().isNotFound())
+           .andReturn();
+    }
+
+    @Test
+    public void cannotUpdateANonExistentDegree() throws Exception {
+
+        Degree degree = objectFactory.createDegree();
+        degree.setDegreeId(DEGREE_ID);
+        doThrow(DegreeNotFoundException.class).when(degreeService).update(degree);
+
+        String content = mapper.writeValueAsString(DegreeDto.from(degree));
+        mvc.perform(put("/degrees/{degreeId}", TestObjectFactory.DEGREE_ID)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(content))
+           .andDo(print())
+           .andExpect(status().isNotFound())
+           .andReturn();
     }
 
     @Test
     public void canListAll() throws Exception {
-        DegreeDto expectedResponse = objectFactory.createDegreeDto();
 
         when(degreeService.findAll()).thenReturn(Arrays.asList(objectFactory.createDegree()));
 
-        MvcResult response = mvc.perform(get("/degrees").contentType(MediaType.APPLICATION_JSON))
-                                .andDo(print())
-                                .andExpect(status().isOk())
-                                .andReturn();
+        mvc.perform(get("/degrees").contentType(MediaType.APPLICATION_JSON))
+           .andDo(print())
+           .andExpect(status().isOk())
+           .andReturn();
     }
 
     @Test
@@ -92,9 +118,7 @@ public class DegreeControllerTest {
 
         when(degreeService.update(degree)).thenReturn(degree);
 
-
         String content = mapper.writeValueAsString(DegreeDto.from(degree));
-        System.out.println(content);
         MvcResult response = mvc.perform(put("/degrees/{degreeId}", DEGREE_ID)
                                                  .contentType(MediaType.APPLICATION_JSON)
                                                  .content(content))
@@ -105,6 +129,27 @@ public class DegreeControllerTest {
         assertThatUpdatedDegreeIsEqualTo(response, expectedResponse);
     }
 
+    @Test
+    public void canGetARequestById() throws Exception {
+        DegreeDto expectedResponse = objectFactory.createDegreeDto();
+
+        when(degreeService.findById(TestObjectFactory.DEGREE_ID)).thenReturn(objectFactory.createDegree());
+
+        MvcResult response =
+                mvc.perform(get("/degrees/{id}", TestObjectFactory.DEGREE_ID).contentType(MediaType.APPLICATION_JSON))
+                   .andDo(print())
+                   .andExpect(status().isOk())
+                   .andReturn();
+        assertThatCreatedDegreeIsEqualTo(response, expectedResponse);
+
+    }
+
+    private void assertThatCreatedDegreeIsEqualTo(MvcResult response, DegreeDto expectedResponse) throws IOException {
+        DegreeDto degreeDto = parseResponse(response);
+        assertThat(degreeDto).isEqualToComparingFieldByField(degreeDto);
+    }
+
+
     private void assertThatUpdatedDegreeIsEqualTo(MvcResult response, DegreeDto requestBody) throws IOException {
         DegreeDto degreeDto = parseResponse(response);
         assertThat(degreeDto).isEqualToComparingFieldByField(degreeDto);
@@ -114,7 +159,10 @@ public class DegreeControllerTest {
         assertThat(degreeDto.getDegreeId()).isNotNull();
     }
 
-    private void assertThatCreatedDegreeIsEqualTo(MvcResult response, DegreeDto expectedResponse, CreateDegreeDto requestBody)
+    private void assertThatCreatedDegreeIsEqualTo(MvcResult response,
+                                                  DegreeDto expectedResponse,
+                                                  CreateDegreeDto requestBody
+    )
     throws IOException {
         DegreeDto degreeDto = parseResponse(response);
         assertThat(degreeDto).isEqualToComparingFieldByField(expectedResponse);

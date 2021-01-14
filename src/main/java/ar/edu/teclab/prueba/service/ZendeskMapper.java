@@ -61,8 +61,7 @@ public class ZendeskMapper {
     List<Comment> extractCommentsFromResponse(ResponseEntity<ObjectNode> response) {
         JsonNode comments = response.getBody().get("comments");
         try {
-            return objectMapper.readValue(String.valueOf(comments), new TypeReference<ArrayList<Comment>>() {
-            });
+            return objectMapper.readValue(String.valueOf(comments), new TypeReference<ArrayList<Comment>>() {  });
         } catch (IOException e) {
             throw new DomainException("Could not get comments");
         }

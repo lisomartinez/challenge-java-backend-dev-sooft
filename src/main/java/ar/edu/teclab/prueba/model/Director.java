@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-public class Director {
+public class Director extends Entity {
     private static final Pattern emailValidator =
             Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
 
@@ -15,7 +15,7 @@ public class Director {
 
 
     public Director(String directorId, String firstName, String lastName, String email) {
-
+        super(null);
         this.directorId = directorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,7 +23,12 @@ public class Director {
     }
 
     public Director(String directorId) {
+        super(null);
         this.directorId = directorId;
+    }
+
+    public Director(String firstName, String lastName, String email) {
+        this(null, firstName, lastName, email);
     }
 
     public static Director create(String directorId, String firstName, String lastName, String email) {
@@ -32,6 +37,13 @@ public class Director {
         assertThatFieldIsPresent(lastName, "Cannot create a director without last name");
         assertThatEmailHasCorrectFormat(email);
         return new Director(directorId, firstName, lastName, email);
+    }
+
+    public static Director create(String firstName, String lastName, String email) {
+        assertThatFieldIsPresent(firstName, "Cannot create a director without first name");
+        assertThatFieldIsPresent(lastName, "Cannot create a director without last name");
+        assertThatEmailHasCorrectFormat(email);
+        return new Director(firstName, lastName, email);
     }
 
     private static void assertThatEmailHasCorrectFormat(String email) {

@@ -21,7 +21,7 @@ public class TicketServiceTest {
         LocalTicketService ticketService =  new LocalTicketService();
         ticketService.addTicket(1);
         Comment aComment = createAComment(1L);
-        ticketService.commentOnTicket(1, aComment);
+        ticketService.addCommentToTicket(1, aComment);
         List<Comment> comments = ticketService.getCommentsOfTicket(1);
         assertThat(comments).containsExactly(aComment);
     }
@@ -36,8 +36,8 @@ public class TicketServiceTest {
         ticketService.addTicket(1);
         Comment aFirstComment = createAComment(1L);
         Comment aSecondComment = createAComment(2L);
-        ticketService.commentOnTicket(1, aFirstComment);
-        ticketService.commentOnTicket(1, aSecondComment);
+        ticketService.addCommentToTicket(1, aFirstComment);
+        ticketService.addCommentToTicket(1, aSecondComment);
         List<Comment> comments = ticketService.getCommentsOfTicket(1);
         assertThat(comments).containsExactly(aFirstComment, aSecondComment);
     }
@@ -47,7 +47,7 @@ public class TicketServiceTest {
         LocalTicketService ticketService = new LocalTicketService();
         Comment aComment = createAComment(1L);
 
-        assertThatThrownBy(() -> ticketService.commentOnTicket(10, aComment))
+        assertThatThrownBy(() -> ticketService.addCommentToTicket(10, aComment))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot comment on non-existent ticket");
     }

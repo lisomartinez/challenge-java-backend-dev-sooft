@@ -99,13 +99,15 @@ public class DegreeDto {
         if (!(o instanceof DegreeDto)) return false;
         DegreeDto degreeDto = (DegreeDto) o;
         return Objects.equals(getDegreeId(), degreeDto.getDegreeId()) && Objects.equals(getTitle(),
-                                                                                        degreeDto.getTitle()) && getType() == degreeDto
-                .getType() && Objects.equals(getDirector(), degreeDto.getDirector());
+                                                                                        degreeDto.getTitle()) && Objects
+                .equals(getType(), degreeDto.getType()) && Objects.equals(getDirector(),
+                                                                          degreeDto.getDirector()) && Objects
+                .equals(getStudyPlan(), degreeDto.getStudyPlan());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDegreeId(), getTitle(), getType(), getDirector());
+        return Objects.hash(getDegreeId(), getTitle(), getType(), getDirector(), getStudyPlan());
     }
 
     @Override
