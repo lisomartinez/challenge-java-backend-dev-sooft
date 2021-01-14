@@ -1,6 +1,7 @@
 package ar.edu.teclab.prueba;
 
 import ar.edu.teclab.prueba.controller.TicketController;
+import ar.edu.teclab.prueba.controller.exceptions.ErrorMessage;
 import ar.edu.teclab.prueba.dto.TicketNotFoundDomainException;
 import ar.edu.teclab.prueba.service.TicketService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -84,11 +85,11 @@ public class TicketControllerTest {
         when(ticketService.getCommentsOfTicket(12)).thenThrow(new TicketNotFoundDomainException());
 
         ErrorMessage expectedError = ErrorMessage.anErrorMessage()
-                .setMessage("Cannot get comments of non-existent tickets")
-                .setPath("http://localhost/tickets/12/comments")
-                .setMethod("GET")
-                .setStatusCode(400)
-                .build();
+                                                 .setMessage("Cannot get comments of non-existent tickets")
+                                                 .setPath("http://localhost/tickets/12/comments")
+                                                 .setMethod("GET")
+                                                 .setStatusCode(400)
+                                                 .build();
 
         String ticketId = "12";
         MvcResult mvcResult = this.mvc.perform(get("/tickets/{id}/comments", ticketId)

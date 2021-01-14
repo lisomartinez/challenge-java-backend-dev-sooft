@@ -2,18 +2,16 @@ package ar.edu.teclab.prueba;
 
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.model.Degree;
-import ar.edu.teclab.prueba.model.DegreeNotFoundException;
+import ar.edu.teclab.prueba.model.exceptions.DegreeNotFoundException;
 import ar.edu.teclab.prueba.model.DegreeType;
-import ar.edu.teclab.prueba.model.Director;
 import ar.edu.teclab.prueba.repository.DegreeRepository;
 import ar.edu.teclab.prueba.repository.InMemoryDegreeRepository;
 import ar.edu.teclab.prueba.service.DegreeService;
-import ar.edu.teclab.prueba.shared.DomainException;
+import ar.edu.teclab.prueba.model.DomainException;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

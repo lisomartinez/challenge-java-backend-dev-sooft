@@ -1,6 +1,6 @@
 package ar.edu.teclab.prueba.dto;
 
-import ar.edu.teclab.prueba.shared.DomainException;
+import ar.edu.teclab.prueba.model.DomainException;
 
 public class TicketNotFoundDomainException extends DomainException {
     private static final String NOT_FOUND = "Cannot get comments of non-existent tickets";

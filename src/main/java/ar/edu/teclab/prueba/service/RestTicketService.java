@@ -1,7 +1,7 @@
 package ar.edu.teclab.prueba.service;
 
 import ar.edu.teclab.prueba.Comment;
-import ar.edu.teclab.prueba.shared.DomainException;
+import ar.edu.teclab.prueba.model.DomainException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +45,7 @@ public class RestTicketService implements TicketService {
         this.httpClient = restTemplateBuilder
                 .basicAuthorization(user, password)
                 .uriTemplateHandler(baseUrl)
-                .errorHandler(new RestTemplateResponseErrorHandler())
+                .errorHandler(new RestTicketServiceResponseErrorHandler())
                 .build();
     }
 

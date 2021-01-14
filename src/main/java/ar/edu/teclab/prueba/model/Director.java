@@ -1,7 +1,5 @@
 package ar.edu.teclab.prueba.model;
 
-import ar.edu.teclab.prueba.shared.DomainException;
-
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;

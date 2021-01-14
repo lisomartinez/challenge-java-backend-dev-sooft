@@ -2,10 +2,10 @@ package ar.edu.teclab.prueba.service;
 
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.model.*;
+import ar.edu.teclab.prueba.model.exceptions.DegreeNotFoundException;
 import ar.edu.teclab.prueba.repository.DegreeRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 

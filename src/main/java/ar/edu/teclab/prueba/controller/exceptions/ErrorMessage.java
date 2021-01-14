@@ -1,4 +1,4 @@
-package ar.edu.teclab.prueba;
+package ar.edu.teclab.prueba.controller.exceptions;
 
 import java.util.Objects;
 

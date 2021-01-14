@@ -1,6 +1,6 @@
-package ar.edu.teclab.prueba.model;
+package ar.edu.teclab.prueba.model.exceptions;
 
-import ar.edu.teclab.prueba.shared.DomainException;
+import ar.edu.teclab.prueba.model.DomainException;
 
 public class DegreeDomainException extends DomainException {
     public DegreeDomainException(String message) {

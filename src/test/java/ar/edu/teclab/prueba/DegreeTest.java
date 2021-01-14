@@ -4,7 +4,7 @@ import ar.edu.teclab.prueba.model.Degree;
 import ar.edu.teclab.prueba.model.DegreeType;
 import ar.edu.teclab.prueba.model.Director;
 import ar.edu.teclab.prueba.model.Subject;
-import ar.edu.teclab.prueba.shared.DomainException;
+import ar.edu.teclab.prueba.model.DomainException;
 import org.junit.Test;
 
 import java.util.HashSet;

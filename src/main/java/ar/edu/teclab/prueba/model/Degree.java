@@ -1,7 +1,5 @@
 package ar.edu.teclab.prueba.model;
 
-import ar.edu.teclab.prueba.shared.DomainException;
-
 import java.util.*;
 
 public class Degree {
