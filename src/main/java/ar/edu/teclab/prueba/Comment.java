@@ -1,14 +1,12 @@
 package ar.edu.teclab.prueba;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Comment {
 
-    @JsonProperty
     private long id;
 
     private String body;
