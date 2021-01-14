@@ -27,12 +27,6 @@ public class LocalTicketService implements TicketService {
         }
     }
 
-    @Override
-    public void commentOnTicket(int ticketId, Comment aComment) {
-        assertThatTicketExists(ticketId, CANNOT_COMMENT_ON_NON_EXISTENT_TICKET);
-        List<Comment> comments = this.tickets.get(ticketId);
-        comments.add(aComment);
-    }
 
     @Override
     public String getCommentsOfTicketTest(int id) {
@@ -41,7 +35,10 @@ public class LocalTicketService implements TicketService {
 
     @Override
     public Comment addCommentToTicket(int id, Comment comment) {
-        return null;
+        assertThatTicketExists(id, CANNOT_COMMENT_ON_NON_EXISTENT_TICKET);
+        List<Comment> comments = this.tickets.get(id);
+        comments.add(comment);
+        return comment;
     }
 
     public void addTicket(int ticket) {
