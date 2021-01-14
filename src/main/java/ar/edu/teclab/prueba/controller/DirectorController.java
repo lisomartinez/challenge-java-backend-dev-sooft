@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,11 @@ public class DirectorController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DirectorDto> create(@RequestBody DirectorDto directorDto) {
         Director createdDirector = directorService.create(directorDto.toEntity());
-        return ResponseEntity.ok(DirectorDto.from(createdDirector));
+        return ResponseEntity.created(createUri(createdDirector)).body(DirectorDto.from(createdDirector));
+    }
+
+    private URI createUri(Director created) {
+        return URI.create("/degrees/directors/" + created.getDirectorId());
     }
 
     @Operation(summary = "Retrieve a Director")
