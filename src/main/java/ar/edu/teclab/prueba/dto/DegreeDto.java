@@ -119,7 +119,13 @@ public class DegreeDto {
     }
 
     public Degree toEntity() {
-        return Degree.createDegree(degreeId, title, DegreeType.valueOf(type.toUpperCase(Locale.ROOT)), director.toEntity(), mapStudyPlanToEntity(studyPlan));
+        return Degree.aDegree()
+                 .setDegreeId(degreeId)
+                 .setType(DegreeType.valueOf(type.toUpperCase(Locale.ROOT)))
+                     .setDirector(director.toEntity())
+                     .setTitle(title)
+                     .setStudyPlan(mapStudyPlanToEntity(studyPlan))
+                .build();
     }
 
     private Set<Subject> mapStudyPlanToEntity(List<SubjectDto> studyPlan) {

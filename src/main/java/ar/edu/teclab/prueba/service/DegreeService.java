@@ -43,10 +43,11 @@ public class DegreeService {
     }
 
     public Degree create(CreateDegreeDto degreeDto) {
-        Degree degree = Degree.createDegree(degreeDto.getTitle(),
-                                            DegreeType.valueOf(degreeDto.getType().toUpperCase(Locale.ROOT)),
-                                            Director.identifiedAs(degreeDto.getDirectorId()),
-                                            new HashSet<>());
+        Degree degree = Degree.aDegree()
+                             .setTitle(degreeDto.getTitle())
+                             .setType(DegreeType.valueOf(degreeDto.getType().toUpperCase(Locale.ROOT)))
+                             .setDirector(Director.identifiedAs(degreeDto.getDirectorId()))
+                             .build();
         return degreeRepository.save(degree);
     }
 }

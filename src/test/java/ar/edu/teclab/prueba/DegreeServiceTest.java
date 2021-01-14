@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DegreeServiceTest {
-
+    private TestObjectFactory objectFactory = new TestObjectFactory();
     private DegreeRepository degreeRepository;
 
     @Before
@@ -39,27 +39,19 @@ public class DegreeServiceTest {
     @Test
     public void canListDegrees() {
         DegreeService service = new DegreeService(degreeRepository);
-        Degree degree = createDegree();
+        Degree degree = objectFactory.createDegree();
         Degree savedDegree = degreeRepository.save(degree);
         List<Degree> degrees =
                 service.findAll();
         assertThat(degrees).containsExactly(savedDegree);
     }
 
-    private Degree createDegree() {
-        return Degree.createDegree("degree title",
-                                   DegreeType.ONLINE,
-                                   Director.create("725d1d64-0ac7-4d09-99ee-0a9920453fe3",
-                                                   "Juan",
-                                                   "Perez",
-                                                   "juanperez@gmail.com")
-                , new HashSet<>());
-    }
+
 
     @Test
     public void canGetDegreesById() {
         DegreeService service = new DegreeService(degreeRepository);
-        Degree degree = createDegree();
+        Degree degree = objectFactory.createDegree();
         Degree savedDegree = degreeRepository.save(degree);
         assertThat(service.findById(savedDegree.getDegreeId())).isEqualTo(savedDegree);
     }
@@ -76,7 +68,7 @@ public class DegreeServiceTest {
     @Test
     public void canDeleteExistingDegrees() {
         DegreeService service = new DegreeService(degreeRepository);
-        Degree degree = createDegree();
+        Degree degree = objectFactory.createDegree();
         Degree savedDegree = degreeRepository.save(degree);
 
         service.deleteByDegreeId(degree.getDegreeId());
@@ -99,9 +91,9 @@ public class DegreeServiceTest {
     @Test
     public void canUpdateAnExistingDegree() {
         DegreeService service = new DegreeService(degreeRepository);
-        Degree degree = createDegree();
+        Degree degree = objectFactory.createDegree();
         Degree savedDegree = degreeRepository.save(degree);
-        Degree degreeForUpdate = createDegree();
+        Degree degreeForUpdate = objectFactory.createDegree();
         degreeForUpdate.setDegreeId(savedDegree.getDegreeId());
         degreeForUpdate.setTitle("New Title");
         degreeForUpdate.setType(DegreeType.ON_SITE);
@@ -114,7 +106,7 @@ public class DegreeServiceTest {
     public void cannotUpdateANonExistingDegree() {
         String directorId = "d4f4a37a-0b70-4c3a-8815-48542d556528";
         DegreeService service = new DegreeService(degreeRepository);
-        Degree degreeForUpdate = createDegree();
+        Degree degreeForUpdate = objectFactory.createDegree();
         degreeForUpdate.setDegreeId(directorId);
         degreeForUpdate.setTitle("New Title");
         degreeForUpdate.setType(DegreeType.ON_SITE);

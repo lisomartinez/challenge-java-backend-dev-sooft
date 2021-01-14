@@ -15,9 +15,6 @@ public class Director {
     private String lastName;
     private String email;
 
-    Director() {
-
-    }
 
     public Director(String directorId, String firstName, String lastName, String email) {
 
@@ -66,9 +63,7 @@ public class Director {
     }
 
     public static Director identifiedAs(String directorId) {
-        Director director = new Director();
-        director.setDirectorId(directorId);
-        return director;
+        return new Director(directorId);
     }
 
     public String getDirectorId() {
