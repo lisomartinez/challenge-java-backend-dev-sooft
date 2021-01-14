@@ -7,7 +7,6 @@ import ar.edu.teclab.prueba.model.Degree;
 import ar.edu.teclab.prueba.service.DegreeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,8 +20,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/degrees", produces = "application/json")
+@RequestMapping(value = DegreeController.DEGREES, produces = DegreeController.APPLICATION_JSON)
 public class DegreeController {
+    public static final String DEGREES = "/degrees";
+    public static final String APPLICATION_JSON = "application/json";
     private DegreeService service;
 
     @Autowired
@@ -92,10 +93,10 @@ public class DegreeController {
                                     schema = @Schema(implementation = ErrorMessage.class))
                     })
     })
-    @PutMapping("/{degreeId}")
-    public ResponseEntity<DegreeDto> delete(@PathVariable String degreeId, @RequestBody DegreeDto degree) {
-
-        Degree updatedDegree = service.update(degree.toEntity());
+    @PutMapping()
+    public ResponseEntity<DegreeDto> update(@RequestBody DegreeDto degree) {
+        Degree degreeForUpdate = degree.toEntity();
+        Degree updatedDegree = service.update(degreeForUpdate);
         DegreeDto from = DegreeDto.from(updatedDegree);
         return ResponseEntity.ok(from);
     }

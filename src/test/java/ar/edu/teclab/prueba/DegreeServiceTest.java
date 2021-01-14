@@ -2,42 +2,60 @@ package ar.edu.teclab.prueba;
 
 import ar.edu.teclab.prueba.dto.CreateDegreeDto;
 import ar.edu.teclab.prueba.model.Degree;
+import ar.edu.teclab.prueba.model.DegreeType;
 import ar.edu.teclab.prueba.model.Director;
 import ar.edu.teclab.prueba.model.exceptions.DegreeDomainException;
 import ar.edu.teclab.prueba.model.exceptions.DegreeNotFoundException;
-import ar.edu.teclab.prueba.model.DegreeType;
 import ar.edu.teclab.prueba.repository.DegreeRepository;
 import ar.edu.teclab.prueba.repository.DirectorRepository;
-import ar.edu.teclab.prueba.repository.InMemoryDegreeRepository;
-import ar.edu.teclab.prueba.repository.InMemoryDirectorRepository;
 import ar.edu.teclab.prueba.service.DegreeService;
-import ar.edu.teclab.prueba.service.DirectorService;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@Transactional
 public class DegreeServiceTest {
     private TestObjectFactory objectFactory = new TestObjectFactory();
+
+    DegreeService service;
+    @Autowired
     private DegreeRepository degreeRepository;
-    private DirectorService directorService;
-    private InMemoryDirectorRepository directorRepository;
+    @Autowired
+    private TestEntityManager entityManager;
+    @Autowired
+    private DirectorRepository directorRepository;
+    private Director director;
 
     @Before
-    public void setUp() throws Exception {
-        degreeRepository = new InMemoryDegreeRepository();
-        directorRepository = new InMemoryDirectorRepository();
-        directorRepository.save(Director.identifiedAs(TestObjectFactory.DIRECTOR_ID));
-        directorService = new DirectorService(directorRepository);
+    public void setUp() {
+        Long id = entityManager.persistAndGetId(Director.identifiedAs(TestObjectFactory.DIRECTOR_ID), Long.class);
+        director = entityManager.find(Director.class, id);
+        entityManager.flush();
+        service = new DegreeService(degreeRepository, directorRepository);
+    }
+
+    @After
+    public void tearDown() {
+        entityManager.clear();
     }
 
     @Test
     public void listIsEmptyIfThereIsNotDegrees() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
+
         List<Degree> degrees =
                 service.findAll();
         assertThat(degrees).isEmpty();
@@ -45,8 +63,8 @@ public class DegreeServiceTest {
 
     @Test
     public void canListDegrees() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
-        Degree degree = objectFactory.createDegree();
+
+        Degree degree = objectFactory.createDegree(director);
         Degree savedDegree = degreeRepository.save(degree);
         List<Degree> degrees =
                 service.findAll();
@@ -55,15 +73,15 @@ public class DegreeServiceTest {
 
     @Test
     public void canGetDegreesById() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
-        Degree degree = objectFactory.createDegree();
+
+        Degree degree = objectFactory.createDegree(director);
         Degree savedDegree = degreeRepository.save(degree);
         assertThat(service.findById(savedDegree.getDegreeId())).isEqualTo(savedDegree);
     }
 
     @Test
     public void cannotGetANotSavedDegree() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
+
 
         assertThatThrownBy(() -> service.findById(TestObjectFactory.DEGREE_ID))
                 .isExactlyInstanceOf(DegreeNotFoundException.class)
@@ -72,8 +90,8 @@ public class DegreeServiceTest {
 
     @Test
     public void canDeleteExistingDegrees() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
-        Degree degree = objectFactory.createDegree();
+
+        Degree degree = objectFactory.createDegree(director);
         Degree savedDegree = degreeRepository.save(degree);
 
         service.deleteByDegreeId(degree.getDegreeId());
@@ -85,41 +103,35 @@ public class DegreeServiceTest {
 
     @Test
     public void cannotDeleteNonExistingDegrees() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
 
-        assertThatThrownBy(() -> service.deleteByDegreeId(TestObjectFactory.DEGREE_ID))
+
+        assertThatThrownBy(() -> service.deleteByDegreeId(TestObjectFactory.OTHER_DEGREE_ID))
                 .isExactlyInstanceOf(DegreeDomainException.class)
                 .hasMessage("Cannot delete non existing Degree");
     }
 
     @Test
     public void canUpdateAnExistingDegree() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
-        Degree degree = objectFactory.createDegree();
-        setDirectorId(degree);
+
+        Degree degree = objectFactory.createDegree(director);
         Degree savedDegree = degreeRepository.save(degree);
         Degree degreeForUpdate = objectFactory.createDegree();
         degreeForUpdate.setDegreeId(savedDegree.getDegreeId());
         degreeForUpdate.setTitle("New Title");
         degreeForUpdate.setType(DegreeType.ON_SITE);
-        setDirectorId(degreeForUpdate);
         Degree updatedDegree = service.update(degreeForUpdate);
         assertThat(updatedDegree).isEqualTo(degreeForUpdate);
     }
 
-    private void setDirectorId(Degree savedDegree) {
-        savedDegree.setDirector(directorRepository.getLast());
-    }
 
     @Test
     public void cannotUpdateANonExistingDegree() {
 
-        DegreeService service = new DegreeService(degreeRepository, directorService);
+
         Degree degreeForUpdate = objectFactory.createDegree();
         degreeForUpdate.setDegreeId(TestObjectFactory.DEGREE_ID);
         degreeForUpdate.setTitle("New Title");
         degreeForUpdate.setType(DegreeType.ON_SITE);
-        setDirectorId(degreeForUpdate);
         assertThatThrownBy(() -> service.update(degreeForUpdate))
                 .isExactlyInstanceOf(DegreeDomainException.class)
                 .hasMessage("Cannot update a non existing Degree");
@@ -127,14 +139,11 @@ public class DegreeServiceTest {
 
     @Test
     public void canCreateADegree() {
-        DegreeService service = new DegreeService(degreeRepository, directorService);
+
         CreateDegreeDto degreeDto = new CreateDegreeDto("a title", "online", TestObjectFactory.DIRECTOR_ID, new ArrayList<>());
-        setDirectorId(degreeDto);
         Degree savedDegree = service.create(degreeDto);
         assertThat(service.findById(savedDegree.getDegreeId())).isEqualTo(savedDegree);
     }
 
-    private void setDirectorId(CreateDegreeDto degreeDto) {
-        degreeDto.setDirectorId(directorRepository.getLast().getDirectorId());
-    }
+
 }

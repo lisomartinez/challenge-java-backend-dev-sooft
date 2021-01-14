@@ -1,25 +1,34 @@
 package ar.edu.teclab.prueba.model;
 
-import java.util.*;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
-public class Degree extends Entity {
+@Entity
+public class Degree {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String degreeId;
     private String title;
     private DegreeType type;
+
+    @OneToOne
     private Director director;
+
+    @ElementCollection
+    @CollectionTable(name = "subject", joinColumns = @JoinColumn(name = "id"))
     private Set<Subject> studyPlan;
 
-    private Degree(Long id, String degreeId, String title, DegreeType type, Director director, Set<Subject> studyPlan) {
-        super(id);
-        this.degreeId = degreeId;
-        this.title = title;
-        this.type = type;
-        this.director = director;
-        this.studyPlan = studyPlan;
+    public Degree() {
     }
 
+
     public Degree(DegreeBuilder builder) {
-        super(builder.id);
+        this.id = builder.id;
         this.degreeId = builder.degreeId;
         this.title = builder.title;
         this.type = builder.type;
@@ -55,13 +64,10 @@ public class Degree extends Entity {
         this.director = director;
     }
 
-    public void setDegreeId(String aDirectorsId) {
-        degreeId = aDirectorsId;
+    public void setDegreeId(String aDegreeId) {
+        degreeId = aDegreeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setTitle(String newTitle) {
         title = newTitle;
@@ -71,16 +77,10 @@ public class Degree extends Entity {
         type = newType;
     }
 
-    public void addSubjectToStudyPlan(Subject subject) {
-        this.studyPlan.add(subject);
-    }
 
-    public void removeSubjectFromStudyPlan(Subject subject) {
-        this.studyPlan.remove(subject);
-    }
 
     public Set<Subject> getStudyPlan() {
-        return Collections.unmodifiableSet(studyPlan);
+        return studyPlan;
     }
 
     @Override
@@ -107,6 +107,10 @@ public class Degree extends Entity {
                 '}';
     }
 
+    public void setStudyPlant(Set<Subject> studyPlan) {
+        this.studyPlan = studyPlan;
+    }
+
     public static class DegreeBuilder {
         private Long id;
         private String degreeId = null;
@@ -115,10 +119,6 @@ public class Degree extends Entity {
         private Director director;
         private Set<Subject> studyPlan = new HashSet<>();
 
-        public DegreeBuilder setId(Long id) {
-            this.id = id;
-            return this;
-        }
         public DegreeBuilder setDegreeId(String degreeId) {
             assertThatIdHasUUIDFormat(degreeId);
             this.degreeId = degreeId;

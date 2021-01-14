@@ -45,8 +45,8 @@ public class DirectorController {
         return ResponseEntity.ok(directors.stream().map(DirectorDto::from).collect(Collectors.toList()));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> delete(String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         directorService.deleteByDirectorId(id);
         return ResponseEntity.noContent().build();
     }

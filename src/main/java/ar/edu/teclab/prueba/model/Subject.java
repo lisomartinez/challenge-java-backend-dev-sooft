@@ -1,13 +1,17 @@
 package ar.edu.teclab.prueba.model;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Embeddable
 public class Subject {
     private String title;
     private int year;
 
+    public Subject() {
+    }
 
-    public Subject( String title, int courseAtYear) {
+    public Subject(String title, int courseAtYear) {
         this.title = title;
         this.year = courseAtYear;
     }
@@ -22,6 +26,13 @@ public class Subject {
         return year;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -54,37 +54,6 @@ public class ErrorMessage {
         this.message = message;
     }
 
-    public static class ErrorMessageBuilder {
-        private int statusCode;
-        private String path;
-        private String method;
-        private String message;
-
-        public ErrorMessageBuilder setStatusCode(int statusCode) {
-            this.statusCode = statusCode;
-            return this;
-        }
-
-        public ErrorMessageBuilder setPath(String path) {
-            this.path = path;
-            return this;
-        }
-
-        public ErrorMessageBuilder setMethod(String method) {
-            this.method = method;
-            return this;
-        }
-
-        public ErrorMessageBuilder  setMessage(String message) {
-            this.message = message;
-            return this;
-        }
-
-        public ErrorMessage build() {
-            return new ErrorMessage(this);
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,5 +76,37 @@ public class ErrorMessage {
                 ", method='" + method + '\'' +
                 ", message='" + message + '\'' +
                 '}';
+    }
+
+    public static class ErrorMessageBuilder {
+        private int statusCode;
+        private String path;
+        private String method;
+
+        private String message;
+
+        public ErrorMessageBuilder setStatusCode(int statusCode) {
+            this.statusCode = statusCode;
+            return this;
+        }
+
+        public ErrorMessageBuilder setPath(String path) {
+            this.path = path;
+            return this;
+        }
+
+        public ErrorMessageBuilder setMethod(String method) {
+            this.method = method;
+            return this;
+        }
+
+        public ErrorMessageBuilder  setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+        public ErrorMessage build() {
+            return new ErrorMessage(this);
+        }
+
     }
 }

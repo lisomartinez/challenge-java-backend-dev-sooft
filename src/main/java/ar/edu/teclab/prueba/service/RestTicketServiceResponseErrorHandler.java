@@ -38,8 +38,11 @@ public class RestTicketServiceResponseErrorHandler
             throw new RemoteServerException("Could not get comments: Remote server unavailable");
 
         if (isClientError(httpResponse)) {
-            if (isNotFound(httpResponse)) throw new TicketNotFoundDomainException();
-            else throw new BadRquestException("could not comment on ticket");
+            if (isNotFound(httpResponse)) {
+                throw new TicketNotFoundDomainException();
+            } else {
+                throw new BadRquestException("could not comment on ticket");
+            }
         }
     }
 

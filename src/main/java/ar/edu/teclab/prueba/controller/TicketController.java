@@ -1,11 +1,9 @@
 package ar.edu.teclab.prueba.controller;
 
 import ar.edu.teclab.prueba.Comment;
-import ar.edu.teclab.prueba.dto.CommentDto;
 import ar.edu.teclab.prueba.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

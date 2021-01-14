@@ -42,6 +42,7 @@ public class DegreeDto {
 
 
     public static DegreeDto from(Degree degree) {
+
         return new DegreeDto(degree.getDegreeId(),
                              degree.getTitle(),
                              degree.getType(),

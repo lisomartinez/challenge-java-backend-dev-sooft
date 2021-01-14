@@ -1,16 +1,18 @@
 package ar.edu.teclab.prueba.service;
 
+import ar.edu.teclab.prueba.model.Director;
 import ar.edu.teclab.prueba.model.DirectorDomainException;
 import ar.edu.teclab.prueba.model.DirectorNotFoundException;
-import ar.edu.teclab.prueba.model.exceptions.DegreeDomainException;
 import ar.edu.teclab.prueba.repository.DirectorRepository;
-import ar.edu.teclab.prueba.model.Director;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
+@Transactional
 public class DirectorService {
     private DirectorRepository directorRepository;
 
@@ -20,21 +22,25 @@ public class DirectorService {
     }
 
     public Director findByDirectorId(String id) {
-        return directorRepository.findById(id)
+        return directorRepository.findByDirectorId(id)
                                  .orElseThrow(DirectorNotFoundException::new);
     }
 
     public Director update(Director director) {
         try {
-            return directorRepository.update(director);
+            Director toUpdate = directorRepository.findByDirectorId(director.getDirectorId())
+                                                  .orElseThrow(IllegalArgumentException::new);
+            toUpdate.setFirstName(director.getFirstName());
+            toUpdate.setLastName(director.getLastName());
+            toUpdate.setEmail(director.getEmail());
+            return toUpdate;
         } catch (IllegalArgumentException ex) {
-            throw new DirectorDomainException("cannot update non existent director");
+            throw new DirectorDomainException("Cannot update a non-existing Director");
         }
     }
 
-
-
     public Director create(Director director) {
+        director.setDirectorId(UUID.randomUUID().toString());
         return directorRepository.save(director);
     }
 
@@ -44,9 +50,17 @@ public class DirectorService {
 
     public void deleteByDirectorId(String id) {
         try {
-            directorRepository.deleteById(id);
+            assertDirectorExists(id);
+            directorRepository.deleteByDirectorId(id);
         } catch (IllegalArgumentException ex) {
-            throw new DirectorDomainException("cannot delete non existent director");
+            ex.printStackTrace();
+            throw new DirectorDomainException("Cannot delete non existing Director");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+    }
+
+    private void assertDirectorExists(String id) {
+        directorRepository.findByDirectorId(id).orElseThrow(IllegalArgumentException::new);
     }
 }

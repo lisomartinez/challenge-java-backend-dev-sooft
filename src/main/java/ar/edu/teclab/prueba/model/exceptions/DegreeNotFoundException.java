@@ -8,8 +8,4 @@ public class DegreeNotFoundException extends DomainException {
     public DegreeNotFoundException() {
         super(NOT_FOUND);
     }
-
-    public DegreeNotFoundException(String message) {
-        super(message);
-    }
 }

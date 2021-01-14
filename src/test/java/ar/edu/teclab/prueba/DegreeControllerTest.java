@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -31,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DegreeControllerTest {
     public static final String DIRECTOR_ID = "725d1d64-0ac7-4d09-99ee-0a9920453fe3";
     public static final String DEGREE_ID = "d5dac498-7ad7-4bf7-b94b-c3b283311242";
+    public static final String DEGREES = "/degrees";
+    public static final String DEGREES_DEGREE_ID = "/degrees/{degreeId}";
     private TestObjectFactory objectFactory = new TestObjectFactory();
 
     @Autowired
@@ -50,8 +52,8 @@ public class DegreeControllerTest {
         when(degreeService.create(createDegreeDto)).thenReturn(objectFactory.createDegree());
 
         String content = mapper.writeValueAsString(createDegreeDto);
-        MvcResult response = mvc.perform(post("/degrees").contentType(MediaType.APPLICATION_JSON)
-                                                         .content(content))
+        MvcResult response = mvc.perform(post(DEGREES).contentType(MediaType.APPLICATION_JSON)
+                                                      .content(content))
                                 .andDo(print())
                                 .andExpect(status().isCreated())
                                 .andReturn();
@@ -64,7 +66,7 @@ public class DegreeControllerTest {
         String degreeId = DEGREE_ID;
         doNothing().when(degreeService).deleteByDegreeId(degreeId);
 
-        mvc.perform(delete("/degrees/{degreeId}", degreeId)
+        mvc.perform(delete(DEGREES_DEGREE_ID, degreeId)
                             .contentType(MediaType.APPLICATION_JSON))
            .andDo(print())
            .andExpect(status().isNoContent())
@@ -76,7 +78,7 @@ public class DegreeControllerTest {
 
         doThrow(DegreeNotFoundException.class).when(degreeService).deleteByDegreeId(TestObjectFactory.DEGREE_ID);
 
-        mvc.perform(delete("/degrees/{degreeId}", TestObjectFactory.DEGREE_ID))
+        mvc.perform(delete(DEGREES_DEGREE_ID, TestObjectFactory.DEGREE_ID))
            .andDo(print())
            .andExpect(status().isNotFound())
            .andReturn();
@@ -90,7 +92,7 @@ public class DegreeControllerTest {
         doThrow(DegreeNotFoundException.class).when(degreeService).update(degree);
 
         String content = mapper.writeValueAsString(DegreeDto.from(degree));
-        mvc.perform(put("/degrees/{degreeId}", TestObjectFactory.DEGREE_ID)
+        mvc.perform(put(DEGREES, TestObjectFactory.DEGREE_ID)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(content))
            .andDo(print())
@@ -101,9 +103,9 @@ public class DegreeControllerTest {
     @Test
     public void canListAll() throws Exception {
 
-        when(degreeService.findAll()).thenReturn(Arrays.asList(objectFactory.createDegree()));
+        when(degreeService.findAll()).thenReturn(Collections.singletonList(objectFactory.createDegree()));
 
-        mvc.perform(get("/degrees").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get(DEGREES).contentType(MediaType.APPLICATION_JSON))
            .andDo(print())
            .andExpect(status().isOk())
            .andReturn();
@@ -119,7 +121,7 @@ public class DegreeControllerTest {
         when(degreeService.update(degree)).thenReturn(degree);
 
         String content = mapper.writeValueAsString(DegreeDto.from(degree));
-        MvcResult response = mvc.perform(put("/degrees/{degreeId}", DEGREE_ID)
+        MvcResult response = mvc.perform(put(DEGREES)
                                                  .contentType(MediaType.APPLICATION_JSON)
                                                  .content(content))
                                 .andDo(print())
@@ -136,7 +138,7 @@ public class DegreeControllerTest {
         when(degreeService.findById(TestObjectFactory.DEGREE_ID)).thenReturn(objectFactory.createDegree());
 
         MvcResult response =
-                mvc.perform(get("/degrees/{id}", TestObjectFactory.DEGREE_ID).contentType(MediaType.APPLICATION_JSON))
+                mvc.perform(get(DEGREES_DEGREE_ID, TestObjectFactory.DEGREE_ID).contentType(MediaType.APPLICATION_JSON))
                    .andDo(print())
                    .andExpect(status().isOk())
                    .andReturn();

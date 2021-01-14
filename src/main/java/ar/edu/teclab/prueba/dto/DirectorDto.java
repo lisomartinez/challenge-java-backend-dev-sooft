@@ -38,6 +38,14 @@ public class DirectorDto {
                                director.getEmail());
     }
 
+    public static DirectorDto create(String firstName, String lastName, String email) {
+        return new DirectorDto(null, firstName, lastName, email);
+    }
+
+    public Director toEntity() {
+        return new Director(directorId, firstName, lastName, email);
+    }
+
     public String getDirectorId() {
         return directorId;
     }
@@ -93,10 +101,5 @@ public class DirectorDto {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }
-
-    public Director toEntity() {
-        return new Director(directorId, firstName, lastName, email);
-
     }
 }

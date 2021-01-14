@@ -5,11 +5,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    DegreeControllerTest.class,
+        DegreeControllerTest.class,
         DegreeSystemTest.class,
         TicketControllerTest.class,
         DegreeControllerTest.class,
-        TicketServiceTest.class
+        TicketServiceTest.class,
+        DirectorServiceTest.class
 })
 public class IntegrationTestSuite {
 

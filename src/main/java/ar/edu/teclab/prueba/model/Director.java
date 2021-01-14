@@ -1,21 +1,34 @@
 package ar.edu.teclab.prueba.model;
 
+import org.hibernate.annotations.NaturalId;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-public class Director extends Entity {
-    private static final Pattern emailValidator =
+@Entity
+public class Director {
+    private static final Pattern EMAIL_VALIDATOR =
             Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NaturalId
     private String directorId;
+
+    public Director() {
+    }
+
     private String firstName;
     private String lastName;
     private String email;
 
 
     public Director(String directorId, String firstName, String lastName, String email) {
-        super(null);
         this.directorId = directorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,13 +36,13 @@ public class Director extends Entity {
     }
 
     public Director(String directorId) {
-        super(null);
         this.directorId = directorId;
     }
 
     public Director(String firstName, String lastName, String email) {
         this(null, firstName, lastName, email);
     }
+
 
     public static Director create(String directorId, String firstName, String lastName, String email) {
         assertThatIdHasCorrectFormat(directorId);
@@ -48,7 +61,7 @@ public class Director extends Entity {
 
     private static void assertThatEmailHasCorrectFormat(String email) {
         assertThatFieldIsPresent(email, "Cannot create a Director without email");
-        if (!emailValidator.matcher(email).matches()) {
+        if (!EMAIL_VALIDATOR.matcher(email).matches()) {
             throw new DomainException("invalid email address format");
         }
     }
@@ -68,13 +81,11 @@ public class Director extends Entity {
         }
     }
 
-    public static Pattern getEmailValidator() {
-        return emailValidator;
-    }
 
     public static Director identifiedAs(String directorId) {
         return new Director(directorId);
     }
+
 
     public String getDirectorId() {
         return directorId;
@@ -119,5 +130,20 @@ public class Director extends Entity {
 
     public String getEmail() {
         return email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Director{" +
+                "id=" + id +
+                ", directorId='" + directorId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

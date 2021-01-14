@@ -1,10 +1,6 @@
 package ar.edu.teclab.prueba;
 
-import ar.edu.teclab.prueba.model.Degree;
-import ar.edu.teclab.prueba.model.DegreeType;
-import ar.edu.teclab.prueba.model.Director;
-import ar.edu.teclab.prueba.model.Subject;
-import ar.edu.teclab.prueba.model.DomainException;
+import ar.edu.teclab.prueba.model.*;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -14,20 +10,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DegreeTest {
+
+    public static final String ID = "cf82e92c-9216-4967-a931-6f36b3be87da";
+
     @Test
     public void degreeKnowsItsTitle() {
-        String id = "cf82e92c-9216-4967-a931-6f36b3be87da";
         String title = "Técnico Superior en Programación";
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        Degree degree = createDegree(id, title, type, director, new HashSet<>());
+        Degree degree = createDegree(ID, title, type, director, new HashSet<>());
         assertThat(degree.getTitle()).isEqualTo(title);
     }
 
-    private Degree createDegree(String id, String title, DegreeType type, Director director, Set<Subject> studyPlan) {
+    private Degree createDegree(String ID
+
+
+            , String title, DegreeType type, Director director, Set<Subject> studyPlan
+    ) {
         return Degree.aDegree()
-                     .setDegreeId(id)
+                     .setDegreeId(ID
+
+
+                     )
                      .setTitle(title)
                      .setType(type)
                      .setDirector(director)
@@ -37,44 +42,49 @@ public class DegreeTest {
 
     @Test
     public void degreeKnowsItsType() {
-        String id = "cf82e92c-9216-4967-a931-6f36b3be87da";
         String title = "Técnico Superior en Programación";
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        Degree degree =createDegree(id, title, type, director, new HashSet<>());
+        Degree degree = createDegree(ID
+
+
+                , title, type, director, new HashSet<>());
         assertThat(degree.getType()).isEqualTo(DegreeType.ONLINE);
     }
 
     @Test
     public void degreeKnowsItsDirector() {
-        String id = "cf82e92c-9216-4967-a931-6f36b3be87da";
         String title = "Técnico Superior en Programación";
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        Degree degree = createDegree(id, title, type, director, new HashSet<>());
+        Degree degree = createDegree(ID
+
+
+                , title, type, director, new HashSet<>());
         assertThat(degree.getDirector()).isEqualTo(director);
     }
 
     @Test
     public void cannotCreateADegreeWithoutTitle() {
-        String id = "cf82e92c-9216-4967-a931-6f36b3be87da";
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> createDegree(id, "   ", type, director, new HashSet<>()))
+        assertThatThrownBy(() -> createDegree(ID, "   ", type, director, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without title.");
     }
 
     @Test
     public void cannotCreateADegreeWithNulltitle() {
-        String id = "cf82e92c-9216-4967-a931-6f36b3be87da";
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> createDegree(id, null, type, director, new HashSet<>()))
+        assertThatThrownBy(() -> createDegree(ID
+
+
+                , null, type, director, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without title.");
     }
@@ -115,11 +125,10 @@ public class DegreeTest {
     @Test
     public void cannotCreateADegreeWithNullDirector() {
         String title = "Técnico Superior en Programación";
-        String id = "cf82e92c-9216-4967-a931-6f36b3be87da";
         DegreeType type = DegreeType.ONLINE;
         Director director =
                 Director.create("279a1be9-c4ab-406b-9e74-31045dd01edf", "Juan", "Perez", "juanperez@gmail.com");
-        assertThatThrownBy(() -> createDegree(id, title, type, null, new HashSet<>()))
+        assertThatThrownBy(() -> createDegree(ID, title, type, null, new HashSet<>()))
                 .isExactlyInstanceOf(DomainException.class)
                 .hasMessage("Cannot create a Degree without a Director.");
     }
