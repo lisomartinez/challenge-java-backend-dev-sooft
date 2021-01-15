@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ar.edu.teclab.service</groupId>
     <artifactId>sms</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <packaging>jar</packaging>
     <description>Envio de mensajes SMS</description>
     <properties>
