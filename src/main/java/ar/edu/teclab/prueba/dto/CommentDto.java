@@ -9,6 +9,7 @@ import java.util.Objects;
 public class CommentDto {
 
     private long id;
+
     @NotNull
     private String body;
 

@@ -11,11 +11,15 @@ public class ErrorMessage {
     public static ErrorMessageBuilder anErrorMessage() {
         return new ErrorMessageBuilder();
     }
+
     public ErrorMessage(ErrorMessageBuilder builder) {
         this.statusCode = builder.statusCode;
         this.path = builder.path;
         this.method = builder.method;
         this.message = builder.message;
+    }
+
+    public ErrorMessage() {
     }
 
 
