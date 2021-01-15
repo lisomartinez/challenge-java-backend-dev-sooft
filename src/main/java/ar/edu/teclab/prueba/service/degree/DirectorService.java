@@ -4,7 +4,6 @@ import ar.edu.teclab.prueba.model.Director;
 import ar.edu.teclab.prueba.model.exceptions.DirectorDomainException;
 import ar.edu.teclab.prueba.model.exceptions.DirectorNotFoundException;
 import ar.edu.teclab.prueba.repository.DirectorRepository;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,18 +51,25 @@ public class DirectorService {
     @Transactional
     public void deleteByDirectorId(String id) {
         try {
+            assertIsNotDirectingAnDegree(id);
             int deleted = directorRepository.deleteByDirectorId(id);
-            if (deleted <= 0) {
-                throw new DirectorDomainException("Cannot delete non existing Director");
-            }
+            assertWasPresent(deleted);
         } catch (IllegalArgumentException ex) {
             throw new DirectorDomainException("Cannot delete non existing Director");
-        } catch (ConstraintViolationException ex) {
-            throw new DirectorDomainException("Cannot delete a Director who is member of a Degree");
         }
     }
 
-    private void assertDirectorExists(String id) {
-        directorRepository.findByDirectorId(id).orElseThrow(IllegalArgumentException::new);
+    private void assertWasPresent(int deleted) {
+        if (deleted <= 0) {
+            throw new DirectorDomainException("Cannot delete non existing Director");
+        }
+    }
+
+    private void assertIsNotDirectingAnDegree(String id) {
+        int directing = directorRepository.getNumberOfDegreeDirectedBy(id);
+        if (directing > 0) {
+            throw new DirectorInDegreeException("Cannot delete a Director who is directing a degree");
+        }
     }
 }
+

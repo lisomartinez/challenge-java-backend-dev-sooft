@@ -73,7 +73,7 @@ public class TicketController {
                                     schema = @Schema(implementation = ErrorMessage.class))
                     })
     })
-    @PutMapping(value = ID, produces = APPLICATION_JSON)
+    @PutMapping(value = COMMENTS, produces = APPLICATION_JSON)
     public ResponseEntity<Comment> addComment(@PathVariable int id, @RequestBody Comment comment) {
         Comment addedComment = ticketService.addCommentToTicket(id, comment);
         return ResponseEntity.ok(addedComment);

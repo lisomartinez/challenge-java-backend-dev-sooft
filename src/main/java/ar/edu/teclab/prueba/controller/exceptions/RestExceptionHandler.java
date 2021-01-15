@@ -1,6 +1,7 @@
 package ar.edu.teclab.prueba.controller.exceptions;
 
 import ar.edu.teclab.prueba.model.exceptions.*;
+import ar.edu.teclab.prueba.service.degree.DirectorInDegreeException;
 import ar.edu.teclab.prueba.shared.BadRquestException;
 import ar.edu.teclab.prueba.shared.TicketNotFoundDomainException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class RestExceptionHandler {
             DomainException.class,
             DegreeDomainException.class,
             TicketNotFoundDomainException.class,
+            DirectorInDegreeException.class,
             DirectorDomainException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
