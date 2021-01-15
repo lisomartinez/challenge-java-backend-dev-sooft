@@ -2,13 +2,14 @@ package ar.edu.teclab.prueba.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Comment {
 
     private long id;
-
+    @NotNull
     private String body;
 
     public Comment(long id, String body) {

@@ -15,6 +15,6 @@
 
 Notas:
 
-- Se utilizó Hibernate para persistir los CRUDS.
+- Se utilizó `Hibernate` para persistir los CRUDS en una BD `H2` en memoria.
 - El proyecto cuenta con varias pruebas automatizadas.
 - la documentación de la API se puede consultar en `/docs.html`. Ejemplo `http://localhost:8093/docs.html`

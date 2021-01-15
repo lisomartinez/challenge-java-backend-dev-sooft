@@ -1,20 +1,23 @@
 package ar.edu.teclab.prueba.dto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class CreateDegreeDto {
-
-    @Size(min = 2, max = 255)
-    private String title;
-
-    @Size(min = 2, max = 25)
-    private String type;
-
     @UUID
     private String directorId;
 
+    @NotNull
+    @Size(min = 2, max = 255, message = "Subject title should be between 2 and 255 characters")
+    private String title;
+
+    @NotNull
+    @Size(min = 2, max = 25, message = "Subject title should be between 2 and 25 characters")
+    private String type;
+
+    @NotNull
     private List<SubjectDto> studyPlan;
 
     public CreateDegreeDto(String title, String type, String directorId, List<SubjectDto> studyPlan) {

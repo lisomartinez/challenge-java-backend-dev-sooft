@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class DirectorController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<DirectorDto> create(@RequestBody DirectorDto directorDto) {
+    public ResponseEntity<DirectorDto> create(@Valid @RequestBody DirectorDto directorDto) {
         Director createdDirector = directorService.create(directorDto.toEntity());
         return ResponseEntity.created(createUri(createdDirector)).body(DirectorDto.from(createdDirector));
     }
@@ -83,7 +84,7 @@ public class DirectorController {
     })
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<DirectorDto> update(@RequestBody DirectorDto director) {
+    public ResponseEntity<DirectorDto> update(@Valid @RequestBody DirectorDto director) {
         Director updatedDirector = directorService.update(director.toEntity());
         return ResponseEntity.ok(DirectorDto.from(updatedDirector));
     }

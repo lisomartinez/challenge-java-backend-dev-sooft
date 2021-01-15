@@ -2,16 +2,24 @@ package ar.edu.teclab.prueba.dto;
 
 import ar.edu.teclab.prueba.model.Subject;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class SubjectDto {
+
+    @NotNull
+    @Size(min = 2, max = 50, message = "Subject title should be between 2 and 50 characters")
     private String title;
+
+    @Min(1)
     private int year;
 
     public SubjectDto() {
     }
 
-    public SubjectDto( String title, int year) {
+    public SubjectDto(String title, int year) {
         this.title = title;
         this.year = year;
     }

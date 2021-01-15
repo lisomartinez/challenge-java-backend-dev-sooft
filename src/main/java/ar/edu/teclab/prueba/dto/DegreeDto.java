@@ -17,10 +17,10 @@ public class DegreeDto {
     @UUID
     private String degreeId;
 
-    @Size(min = 2, max = 255)
+    @Size(min = 2, max = 255, message = "Degree title should be between 2 and 255 characters")
     private String title;
 
-    @Size(min = 2, max = 25)
+    @Size(min = 2, max = 25, message = "Degree title should be between 2 and 25 characters")
     private String type;
 
     @NotNull

@@ -9,6 +9,6 @@ public interface DirectorRepository extends JpaRepository<Director, Long> {
 
     Optional<Director> findByDirectorId(String id);
 
-    void deleteByDirectorId(String id);
+    int deleteByDirectorId(String id);
 
 }

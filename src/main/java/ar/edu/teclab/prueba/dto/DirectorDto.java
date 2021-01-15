@@ -4,21 +4,25 @@ import ar.edu.teclab.prueba.model.Director;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Email;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DirectorDto {
-    @UUID
+    @UUID(message = "Director Id should have UUID format")
     private String directorId;
 
-    @Size(min = 2, max = 50)
+    @NotNull
+    @Size(min = 2, max = 50, message = "First name should be between 2 and 50 characters")
     private String firstName;
 
-    @Size(min = 2, max = 50)
+    @NotNull
+    @Size(min = 2, max = 50, message = "First name should be between 2 and 50 characters")
     private String lastName;
 
-    @Email
+    @NotNull
+    @Email(message = "Email should be valid")
     private String email;
 
     public DirectorDto() {

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class DegreeController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<DegreeDto> create(@RequestBody CreateDegreeDto degreeDto) {
+    public ResponseEntity<DegreeDto> create(@Valid @RequestBody CreateDegreeDto degreeDto) {
         Degree created = service.create(degreeDto);
         return ResponseEntity.created(createUri(created)).body(DegreeDto.from(created));
     }
@@ -85,7 +86,7 @@ public class DegreeController {
     })
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<DegreeDto> update(@RequestBody DegreeDto degree) {
+    public ResponseEntity<DegreeDto> update(@Valid @RequestBody DegreeDto degree) {
         Degree degreeForUpdate = degree.toEntity();
         Degree updatedDegree = service.update(degreeForUpdate);
         DegreeDto from = DegreeDto.from(updatedDegree);
