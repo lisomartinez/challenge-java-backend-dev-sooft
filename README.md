@@ -15,7 +15,9 @@
 Notas:
 
 - Se utilizó `Hibernate` para persistir los CRUDS en una BD `H2` en memoria.
-- El proyecto cuenta con varias pruebas automatizadas.
+- El proyecto cuenta con varias pruebas automatizadas. Se los corre cuando se hace push a master con Github Actions.
+  [Acá](https://github.com/lisomartinez/challenge-java-backend-dev-sooft/blob/main/.github/workflows/maven.yml) esta el
+  yml del pipeline.
 - la documentación de la API se puede consultar en `/docs.html`. Ejemplo `http://localhost:8093/docs.html`
 - En el enunciado no aclaraba si el resultado de consumir la API de comentarios había que mapearlos. Por las dudas
   implementé dos endpoints que devuelve lo mismo pero con diferentes formatos.
