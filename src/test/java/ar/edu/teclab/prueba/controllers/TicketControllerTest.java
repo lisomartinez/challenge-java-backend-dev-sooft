@@ -62,9 +62,9 @@ public class TicketControllerTest {
 
     private List<Comment> commentList() {
         return Arrays.asList(
-                new Comment(1L, "first comment"),
-                new Comment(2L, "second comment"),
-                new Comment(3L, "third comment")
+                Comment.createComment(1L, "first comment"),
+                Comment.createComment(2L, "second comment"),
+                Comment.createComment(3L, "third comment")
         );
     }
 

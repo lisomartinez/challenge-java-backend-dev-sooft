@@ -12,12 +12,16 @@ public class Comment {
     @NotNull
     private String body;
 
-    public Comment(long id, String body) {
+    private Comment(long id, String body) {
         this.id = id;
         this.body = body;
     }
 
     public Comment() {
+    }
+
+    public static Comment createComment(long id, String body) {
+        return new Comment(id, body);
     }
 
 

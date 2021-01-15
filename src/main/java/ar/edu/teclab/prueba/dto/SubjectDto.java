@@ -19,7 +19,7 @@ public class SubjectDto {
     public SubjectDto() {
     }
 
-    public SubjectDto(String title, int year) {
+    private SubjectDto(String title, int year) {
         this.title = title;
         this.year = year;
     }

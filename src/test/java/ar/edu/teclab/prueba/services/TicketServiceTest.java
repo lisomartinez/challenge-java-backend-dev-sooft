@@ -30,7 +30,7 @@ public class TicketServiceTest {
     }
 
     private Comment createAComment(long id) {
-        return new Comment(id, "A comment");
+        return Comment.createComment(id, "A comment");
     }
 
     @Test

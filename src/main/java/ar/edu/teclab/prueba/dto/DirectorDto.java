@@ -28,7 +28,7 @@ public class DirectorDto {
     public DirectorDto() {
     }
 
-    public DirectorDto(String directorId, String firstName, String lastName, String email) {
+    private DirectorDto(String directorId, String firstName, String lastName, String email) {
         this.directorId = directorId;
         this.firstName = firstName;
         this.lastName = lastName;

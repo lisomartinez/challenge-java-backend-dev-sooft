@@ -141,7 +141,8 @@ public class DegreeServiceTest {
     @Test
     public void canCreateADegree() {
 
-        CreateDegreeDto degreeDto = new CreateDegreeDto("a title", "online", TestObjectFactory.DIRECTOR_ID, new ArrayList<>());
+        CreateDegreeDto degreeDto =
+                CreateDegreeDto.create("a title", "online", TestObjectFactory.DIRECTOR_ID, new ArrayList<>());
         Degree savedDegree = service.create(degreeDto);
         assertThat(service.findById(savedDegree.getDegreeId())).isEqualTo(savedDegree);
     }

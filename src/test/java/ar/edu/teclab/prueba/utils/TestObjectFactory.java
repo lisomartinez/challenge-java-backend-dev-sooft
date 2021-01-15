@@ -30,7 +30,7 @@ public class TestObjectFactory {
     }
 
     public CreateDegreeDto createCreateDegreeDto() {
-        return new CreateDegreeDto("degree title", "online", DegreeControllerTest.DIRECTOR_ID, new ArrayList<>());
+        return CreateDegreeDto.create("degree title", "online", DegreeControllerTest.DIRECTOR_ID, new ArrayList<>());
     }
 
     public DegreeDto createDegreeDto() {
@@ -50,7 +50,7 @@ public class TestObjectFactory {
     }
 
     public CreateDegreeDto createCreateDegreeDto(String director) {
-        return new CreateDegreeDto("degree title", "online", director, new ArrayList<>());
+        return CreateDegreeDto.create("degree title", "online", director, new ArrayList<>());
     }
 
     public Director createDirector() {

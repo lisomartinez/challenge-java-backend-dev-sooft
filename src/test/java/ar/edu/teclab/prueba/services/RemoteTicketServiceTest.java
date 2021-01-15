@@ -46,7 +46,7 @@ public class RemoteTicketServiceTest {
         client.setResponse(response);
         List<Comment> commentsOfTicket = ticketService.getCommentsOfTicket(TICKET_ID);
         assertThat(commentsOfTicket).isNotEmpty();
-        assertThat(commentsOfTicket).contains(new Comment(1159431333391L, "Prueba de Joseline Limada"));
+        assertThat(commentsOfTicket).contains(Comment.createComment(1159431333391L, "Prueba de Joseline Limada"));
     }
 
     private String readComments(String file) throws URISyntaxException, IOException {

@@ -32,7 +32,12 @@ public class DegreeDto {
     public DegreeDto() {
     }
 
-    public DegreeDto(String degreeId, String title, DegreeType type, DirectorDto director, List<SubjectDto> studyPlan) {
+    private DegreeDto(String degreeId,
+                      String title,
+                      DegreeType type,
+                      DirectorDto director,
+                      List<SubjectDto> studyPlan
+    ) {
         this.degreeId = degreeId;
         this.title = title;
         this.type = type.toString().toLowerCase(Locale.ROOT);

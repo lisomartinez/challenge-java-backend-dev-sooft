@@ -36,11 +36,11 @@ public class Director {
         this.email = email;
     }
 
-    public Director(String directorId) {
+    private Director(String directorId) {
         this.directorId = directorId;
     }
 
-    public Director(String firstName, String lastName, String email) {
+    private Director(String firstName, String lastName, String email) {
         this(null, firstName, lastName, email);
     }
 

@@ -20,7 +20,7 @@ public class CreateDegreeDto {
     @NotNull
     private List<SubjectDto> studyPlan;
 
-    public CreateDegreeDto(String title, String type, String directorId, List<SubjectDto> studyPlan) {
+    private CreateDegreeDto(String title, String type, String directorId, List<SubjectDto> studyPlan) {
         this.title = title;
         this.type = type;
         this.directorId = directorId;
@@ -28,6 +28,14 @@ public class CreateDegreeDto {
     }
 
     public CreateDegreeDto() {
+    }
+
+    public static CreateDegreeDto create(String title,
+                                         String type,
+                                         String directorId,
+                                         List<SubjectDto> studyPlan
+    ) {
+        return new CreateDegreeDto(title, type, directorId, studyPlan);
     }
 
     public String getTitle() {
