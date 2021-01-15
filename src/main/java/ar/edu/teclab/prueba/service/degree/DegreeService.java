@@ -57,7 +57,7 @@ public class DegreeService {
             updateDegree(degreeForUpdate, degree, director);
             return degreeRepository.save(degree);
         } catch (IllegalArgumentException ex) {
-            throw new DegreeDomainException("Cannot update a non existing Degree");
+            throw new DegreeDomainException(ex.getMessage());
         } catch (Exception ex) {
             throw new DegreeDomainException("error during degree actualization");
         }
@@ -72,12 +72,13 @@ public class DegreeService {
 
     private Director getDirector(Degree degreeForUpdate) {
         return directorRepository.findByDirectorId(degreeForUpdate.getDirector().getDirectorId())
-                                 .orElseThrow(IllegalArgumentException::new);
+                                 .orElseThrow(() -> new IllegalArgumentException(
+                                         "Cannot update with a non existing Director"));
     }
 
     private Degree getDegree(Degree degreeForUpdate) {
         return degreeRepository.findByDegreeId(degreeForUpdate.getDegreeId())
-                               .orElseThrow(IllegalArgumentException::new);
+                               .orElseThrow(() -> new IllegalArgumentException("Cannot update a non existing Degree"));
     }
 
     public Degree create(CreateDegreeDto degreeDto) {

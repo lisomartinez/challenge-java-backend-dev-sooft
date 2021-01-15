@@ -25,7 +25,6 @@ public class DegreeDto {
     private String type;
 
     @NotNull
-    @Valid
     private DirectorDto director;
 
     @NotNull
