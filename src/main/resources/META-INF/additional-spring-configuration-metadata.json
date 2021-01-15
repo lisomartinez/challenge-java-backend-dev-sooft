@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "zendesk.username",
+      "type": "java.lang.String",
+      "description": "Description for zendesk.username."
+    },
+    {
+      "name": "zendesk.password",
+      "type": "java.lang.String",
+      "description": "Description for zendesk.password."
+    }
+  ] }
