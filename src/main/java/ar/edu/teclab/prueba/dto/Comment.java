@@ -19,6 +19,7 @@ public class Comment {
     public Comment() {
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

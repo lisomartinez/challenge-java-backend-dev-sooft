@@ -5,6 +5,7 @@ import ar.edu.teclab.prueba.controllers.DirectorControllerTest;
 import ar.edu.teclab.prueba.controllers.TicketControllerTest;
 import ar.edu.teclab.prueba.functional.DegreeSystemTest;
 import ar.edu.teclab.prueba.services.DirectorServiceTest;
+import ar.edu.teclab.prueba.services.RemoteTicketServiceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -15,7 +16,8 @@ import org.junit.runners.Suite;
         DegreeSystemTest.class,
         TicketControllerTest.class,
         DegreeControllerTest.class,
-        DirectorServiceTest.class
+        DirectorServiceTest.class,
+        RemoteTicketServiceTest.class
 })
 public class IntegrationTestSuite {
 
