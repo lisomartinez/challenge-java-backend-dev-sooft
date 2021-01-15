@@ -19,4 +19,6 @@ Notas:
 - la documentación de la API se puede consultar en `/docs.html`. Ejemplo `http://localhost:8093/docs.html`
 - En el enunciado no aclaraba si el resultado de consumir la API de comentarios había que mapearlos. Por las dudas
   implementé dos endpoints que devuelve lo mismo pero con diferentes formatos.
+- se puede encontrar la carpeta de postman para
+  importa [ACA](https://github.com/lisomartinez/challenge-java-backend-dev-sooft/blob/main/postman/challenge.postman_collection.json)  
   
