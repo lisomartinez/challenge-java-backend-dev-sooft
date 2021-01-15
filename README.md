@@ -1,8 +1,5 @@
 # Challenge para posición backend - Sooft - Teclab
 
-## Lisandro Martinez
-
----
 ![example branch parameter](https://github.com/lisomartinez/challenge-java-backend-dev-sooft/workflows/Java%20CI%20with%20Maven/badge.svg?branch=main)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=lisomartinez_challenge-java-backend-dev-sooft&metric=bugs)](https://sonarcloud.io/dashboard?id=lisomartinez_challenge-java-backend-dev-sooft)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=lisomartinez_challenge-java-backend-dev-sooft&metric=code_smells)](https://sonarcloud.io/dashboard?id=lisomartinez_challenge-java-backend-dev-sooft)
