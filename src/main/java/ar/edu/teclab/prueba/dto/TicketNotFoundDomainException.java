@@ -1,4 +1,4 @@
-package ar.edu.teclab.prueba.shared;
+package ar.edu.teclab.prueba.dto;
 
 import ar.edu.teclab.prueba.model.exceptions.DomainException;
 

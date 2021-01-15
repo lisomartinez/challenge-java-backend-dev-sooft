@@ -2,9 +2,9 @@ package ar.edu.teclab.prueba.controllers;
 
 import ar.edu.teclab.prueba.controller.TicketController;
 import ar.edu.teclab.prueba.controller.exceptions.ErrorMessage;
-import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.dto.CommentDto;
+import ar.edu.teclab.prueba.dto.TicketNotFoundDomainException;
 import ar.edu.teclab.prueba.service.ticket.TicketService;
-import ar.edu.teclab.prueba.shared.TicketNotFoundDomainException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -56,15 +56,15 @@ public class TicketControllerTest {
     }
 
     private void assertThatNoCommentWasReturned(MvcResult mvcResult) throws IOException {
-        List<Comment> comments = jsonToCommentList(mvcResult);
+        List<CommentDto> comments = jsonToCommentList(mvcResult);
         assertThat(comments).isEmpty();
     }
 
-    private List<Comment> commentList() {
+    private List<CommentDto> commentList() {
         return Arrays.asList(
-                Comment.createComment(1L, "first comment"),
-                Comment.createComment(2L, "second comment"),
-                Comment.createComment(3L, "third comment")
+                CommentDto.createComment(1L, "first comment"),
+                CommentDto.createComment(2L, "second comment"),
+                CommentDto.createComment(3L, "third comment")
         );
     }
 
@@ -108,17 +108,18 @@ public class TicketControllerTest {
     }
 
 
-    private List<Comment> emptyCommentList() {
+    private List<CommentDto> emptyCommentList() {
         return Collections.emptyList();
     }
 
     private void assertThatCommentsWasReturned(MvcResult mvcResult) throws java.io.IOException {
-        List<Comment> comments = jsonToCommentList(mvcResult);
+        List<CommentDto> comments = jsonToCommentList(mvcResult);
         assertThat(comments).containsExactlyElementsOf(commentList());
     }
 
-    private List<Comment> jsonToCommentList(MvcResult mvcResult) throws java.io.IOException {
-        return mapper.readValue(extractResponseFrom(mvcResult), new TypeReference<ArrayList<Comment>>() {});
+    private List<CommentDto> jsonToCommentList(MvcResult mvcResult) throws java.io.IOException {
+        return mapper.readValue(extractResponseFrom(mvcResult), new TypeReference<ArrayList<CommentDto>>() {
+        });
     }
 
     private String extractResponseFrom(MvcResult mvcResult) throws UnsupportedEncodingException {

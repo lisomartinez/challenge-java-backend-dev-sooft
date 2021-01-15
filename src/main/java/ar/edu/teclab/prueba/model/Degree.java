@@ -79,8 +79,6 @@ public class Degree {
         type = newType;
     }
 
-
-
     public Set<Subject> getStudyPlan() {
         return studyPlan;
     }

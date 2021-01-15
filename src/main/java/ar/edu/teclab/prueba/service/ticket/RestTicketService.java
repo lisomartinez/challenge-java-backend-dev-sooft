@@ -1,6 +1,6 @@
 package ar.edu.teclab.prueba.service.ticket;
 
-import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.dto.CommentDto;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,8 @@ public class RestTicketService implements TicketService {
     public static final String COMMENTS = "/comments.json";
     public static final String SLASH = "/";
 
-    private ZendeskMapper mapper;
-    private ZendeskClient client;
+    private final ZendeskMapper mapper;
+    private final ZendeskClient client;
 
     @Autowired
     public RestTicketService(ZendeskMapper mapper, ZendeskClient client) {
@@ -24,7 +24,7 @@ public class RestTicketService implements TicketService {
     }
 
     @Override
-    public List<Comment> getCommentsOfTicket(int ticketId) {
+    public List<CommentDto> getCommentsOfTicket(int ticketId) {
         String url = SLASH + ticketId + COMMENTS;
         ResponseEntity<ObjectNode> response = client.getFrom(url);
         return mapper.extractCommentsFromResponse(response);
@@ -38,7 +38,7 @@ public class RestTicketService implements TicketService {
     }
 
     @Override
-    public Comment addCommentToTicket(int id, Comment comment) {
+    public CommentDto addCommentToTicket(int id, CommentDto comment) {
         String url = SLASH + id;
         ResponseEntity<ObjectNode> response = client.put(url, comment);
         return mapper.parseResponse(comment, response);

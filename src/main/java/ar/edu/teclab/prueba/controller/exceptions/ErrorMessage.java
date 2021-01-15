@@ -18,9 +18,6 @@ public class ErrorMessage {
         this.message = builder.message;
     }
 
-    private ErrorMessage() {
-    }
-
 
     public int getStatusCode() {
         return statusCode;

@@ -1,8 +1,8 @@
 package ar.edu.teclab.prueba.service.ticket;
 
+import ar.edu.teclab.prueba.dto.TicketNotFoundDomainException;
 import ar.edu.teclab.prueba.shared.BadRquestException;
 import ar.edu.teclab.prueba.shared.RemoteServerException;
-import ar.edu.teclab.prueba.shared.TicketNotFoundDomainException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;

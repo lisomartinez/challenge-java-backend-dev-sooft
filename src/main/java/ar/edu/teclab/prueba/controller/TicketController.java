@@ -1,7 +1,7 @@
 package ar.edu.teclab.prueba.controller;
 
 import ar.edu.teclab.prueba.controller.exceptions.ErrorMessage;
-import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.dto.CommentDto;
 import ar.edu.teclab.prueba.service.ticket.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -42,8 +42,8 @@ public class TicketController {
     })
     @GetMapping(value = COMMENTS, produces = APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Comment>> getComments(@PathVariable int id) {
-        List<Comment> comments = ticketService.getCommentsOfTicket(id);
+    public ResponseEntity<List<CommentDto>> getComments(@PathVariable int id) {
+        List<CommentDto> comments = ticketService.getCommentsOfTicket(id);
         return ResponseEntity.ok(comments);
     }
 
@@ -74,8 +74,8 @@ public class TicketController {
                     })
     })
     @PutMapping(value = COMMENTS, produces = APPLICATION_JSON)
-    public ResponseEntity<Comment> addComment(@PathVariable int id, @RequestBody Comment comment) {
-        Comment addedComment = ticketService.addCommentToTicket(id, comment);
+    public ResponseEntity<CommentDto> addComment(@PathVariable int id, @RequestBody CommentDto comment) {
+        CommentDto addedComment = ticketService.addCommentToTicket(id, comment);
         return ResponseEntity.ok(addedComment);
     }
 }

@@ -1,9 +1,9 @@
 package ar.edu.teclab.prueba.controller.exceptions;
 
+import ar.edu.teclab.prueba.dto.TicketNotFoundDomainException;
 import ar.edu.teclab.prueba.model.exceptions.*;
 import ar.edu.teclab.prueba.service.degree.DirectorInDegreeException;
 import ar.edu.teclab.prueba.shared.BadRquestException;
-import ar.edu.teclab.prueba.shared.TicketNotFoundDomainException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -1,6 +1,6 @@
 package ar.edu.teclab.prueba.service.ticket;
 
-import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.dto.CommentDto;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +41,7 @@ public class RestZendeskClient implements ZendeskClient {
 
 
     @Override
-    public ResponseEntity<ObjectNode> put(String url, Comment comment) {
+    public ResponseEntity<ObjectNode> put(String url, CommentDto comment) {
         HttpEntity<ObjectNode> request = mapper.createRequestFrom(comment);
         return httpClient.exchange(url, HttpMethod.PUT, request, ObjectNode.class);
     }

@@ -28,7 +28,6 @@ public class Director {
     private String lastName;
     private String email;
 
-
     public Director(String directorId, String firstName, String lastName, String email) {
         this.directorId = directorId;
         this.firstName = firstName;

@@ -6,30 +6,30 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Comment {
+public class CommentDto {
 
     private long id;
     @NotNull
     private String body;
 
-    private Comment(long id, String body) {
+    private CommentDto(long id, String body) {
         this.id = id;
         this.body = body;
     }
 
-    public Comment() {
+    public CommentDto() {
     }
 
-    public static Comment createComment(long id, String body) {
-        return new Comment(id, body);
+    public static CommentDto createComment(long id, String body) {
+        return new CommentDto(id, body);
     }
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Comment)) return false;
-        Comment comment = (Comment) o;
+        if (!(o instanceof CommentDto)) return false;
+        CommentDto comment = (CommentDto) o;
         return id == comment.id && body.equals(comment.body);
     }
 

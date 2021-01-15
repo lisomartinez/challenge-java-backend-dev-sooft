@@ -4,6 +4,7 @@ import ar.edu.teclab.prueba.model.Degree;
 import ar.edu.teclab.prueba.model.DegreeType;
 import ar.edu.teclab.prueba.model.Subject;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -20,13 +21,15 @@ public class DegreeDto {
     @Size(min = 2, max = 255, message = "Degree title should be between 2 and 255 characters")
     private String title;
 
-    @Size(min = 2, max = 25, message = "Degree title should be between 2 and 25 characters")
+    @Size(min = 2, max = 25, message = "Degree type should be between 2 and 25 characters")
     private String type;
 
     @NotNull
+    @Valid
     private DirectorDto director;
 
     @NotNull
+    @Valid
     private List<SubjectDto> studyPlan;
 
     public DegreeDto() {

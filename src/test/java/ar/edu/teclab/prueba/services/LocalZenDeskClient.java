@@ -1,6 +1,6 @@
 package ar.edu.teclab.prueba.services;
 
-import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.dto.CommentDto;
 import ar.edu.teclab.prueba.service.ticket.ZendeskClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -29,7 +29,7 @@ public class LocalZenDeskClient implements ZendeskClient {
     }
 
     @Override
-    public ResponseEntity<ObjectNode> put(String url, Comment comment) {
+    public ResponseEntity<ObjectNode> put(String url, CommentDto comment) {
         ObjectNode responseAsJson = readResponse();
         return new ResponseEntity<ObjectNode>(responseAsJson, null, HttpStatus.OK);
     }

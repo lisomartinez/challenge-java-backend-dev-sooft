@@ -1,6 +1,6 @@
 package ar.edu.teclab.prueba.services;
 
-import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.dto.CommentDto;
 import ar.edu.teclab.prueba.model.exceptions.DomainException;
 import ar.edu.teclab.prueba.service.ticket.TicketService;
 
@@ -13,13 +13,14 @@ public class LocalTicketService implements TicketService {
     public static final String CANNOT_GET_COMMENTS_OF_NON_EXISTENT_TICKETS =
             "Cannot get comments of non-existent tickets";
     public static final String CANNOT_COMMENT_ON_NON_EXISTENT_TICKET = "Cannot comment on non-existent ticket";
-    private final Map<Integer, List<Comment>> tickets;
+    private final Map<Integer, List<CommentDto>> tickets;
 
     public LocalTicketService() {
         tickets = new HashMap<>();
     }
+
     @Override
-    public List<Comment> getCommentsOfTicket(int ticketId) {
+    public List<CommentDto> getCommentsOfTicket(int ticketId) {
         assertThatTicketExists(ticketId, CANNOT_GET_COMMENTS_OF_NON_EXISTENT_TICKETS);
         return tickets.getOrDefault(ticketId, new ArrayList<>());
     }
@@ -38,9 +39,9 @@ public class LocalTicketService implements TicketService {
     }
 
     @Override
-    public Comment addCommentToTicket(int id, Comment comment) {
+    public CommentDto addCommentToTicket(int id, CommentDto comment) {
         assertThatTicketExists(id, CANNOT_COMMENT_ON_NON_EXISTENT_TICKET);
-        List<Comment> comments = this.tickets.get(id);
+        List<CommentDto> comments = this.tickets.get(id);
         comments.add(comment);
         return comment;
     }

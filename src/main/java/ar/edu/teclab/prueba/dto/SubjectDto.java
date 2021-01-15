@@ -14,6 +14,7 @@ public class SubjectDto {
     private String title;
 
     @Min(1)
+    @NotNull
     private int year;
 
     public SubjectDto() {

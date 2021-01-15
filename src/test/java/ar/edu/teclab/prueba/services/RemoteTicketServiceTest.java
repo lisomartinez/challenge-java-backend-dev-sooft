@@ -1,7 +1,7 @@
 package ar.edu.teclab.prueba.services;
 
 
-import ar.edu.teclab.prueba.dto.Comment;
+import ar.edu.teclab.prueba.dto.CommentDto;
 import ar.edu.teclab.prueba.service.ticket.RestTicketService;
 import ar.edu.teclab.prueba.service.ticket.TicketService;
 import ar.edu.teclab.prueba.service.ticket.ZendeskMapper;
@@ -36,7 +36,7 @@ public class RemoteTicketServiceTest {
     @Test
     public void returnsEmptyListIfThereIsNoComments() {
         client.setResponse("{\"comments\": [ ]}");
-        List<Comment> commentsOfTicket = ticketService.getCommentsOfTicket(TICKET_ID);
+        List<CommentDto> commentsOfTicket = ticketService.getCommentsOfTicket(TICKET_ID);
         assertThat(commentsOfTicket).isEmpty();
     }
 
@@ -44,9 +44,9 @@ public class RemoteTicketServiceTest {
     public void returnsCommentsOfTicket() throws URISyntaxException, IOException {
         String response = readComments(COMMENTS_JSON);
         client.setResponse(response);
-        List<Comment> commentsOfTicket = ticketService.getCommentsOfTicket(TICKET_ID);
+        List<CommentDto> commentsOfTicket = ticketService.getCommentsOfTicket(TICKET_ID);
         assertThat(commentsOfTicket).isNotEmpty();
-        assertThat(commentsOfTicket).contains(Comment.createComment(1159431333391L, "Prueba de Joseline Limada"));
+        assertThat(commentsOfTicket).contains(CommentDto.createComment(1159431333391L, "Prueba de Joseline Limada"));
     }
 
     private String readComments(String file) throws URISyntaxException, IOException {
@@ -60,9 +60,9 @@ public class RemoteTicketServiceTest {
     public void canAddCommentsToTickets() throws Exception {
         String response = readComments(CREATED_JSON);
         client.setResponse(response);
-        Comment comment = new Comment();
+        CommentDto comment = new CommentDto();
         comment.setBody("Este es un comentario");
-        Comment added = ticketService.addCommentToTicket(TICKET_ID, comment);
+        CommentDto added = ticketService.addCommentToTicket(TICKET_ID, comment);
         assertThat(added).isEqualTo(comment);
     }
 
